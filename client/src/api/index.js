@@ -7,9 +7,9 @@ const API = axios.create({ baseURL: 'http://localhost:5000' });
 // export const deletePdf = (id) => API.delete(`/posts/pdfs/delete/${id}`);
 
 // export const getIndividulaContributionById = (id)=>API.get(`/posts/getbyId/${id}`)
-// export const fetchPost = (id) => API.get(`/posts/${id}`);
+export const fetchProductById = (id) => API.get(`/posts/${id}`);
 // export const fetchContributionByPostId = (id) => API.get(`/posts/contributedpost/${id}`);
-// export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
+export const fetchAllProducts = ( ) => API.get(`/posts`);
 // export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
 // export const createPost = (newPost) => API.post('/posts', newPost);
 // export const likePost = (id) => API.patch(`/posts/${id}/likePost`);

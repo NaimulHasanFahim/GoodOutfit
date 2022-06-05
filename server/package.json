@@ -18,5 +18,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.5",
     "nodemon": "^2.0.16"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.1.0"
   }
 }

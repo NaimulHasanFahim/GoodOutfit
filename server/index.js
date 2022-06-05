@@ -7,7 +7,6 @@ import cartRoutes from './routes/cart.js';
 import orderRoutes from './routes/order.js';
 import productRoutes from './routes/product.js';
 import userRoutes from './routes/user.js';
-
 const app = express();
 dotenv.config();
 
@@ -25,6 +24,7 @@ app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', orderRoutes);
+// app.use('/seed', seedRoutes);
 
 
 const PORT = process.env.PORT || 5000;
