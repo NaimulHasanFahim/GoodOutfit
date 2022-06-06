@@ -19,8 +19,8 @@ export const fetchAllProducts = ( ) => API.get(`/posts`);
 // export const deletePost = (id) => API.delete(`/posts/${id}`);
 // export const comment = (value, id) => API.post(`/posts/${id}/commentPost`, { value });
 
-// export const signIn = (formData) => API.post('/user/signin', formData);
-// export const signUp = (formData) => API.post('/user/signup', formData);
+export const signIn = (formData) => API.post('/auth/signin', formData);
+export const signUp = (formData) => API.post('/auth/signup', formData);
 // export const getUsersById = (id) => API.get(`/profile/${id}`);
 // export const fetchSingleUserPosts = (id) => API.get(`/posts/single/${id}`);
 // export const updateUserProfile = (id, userData) => API.patch(`/user/update/${id}`, userData);

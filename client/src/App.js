@@ -13,12 +13,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<ProductList />} />
         <Route path="/products/:category" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         {/* <Route path="/success" element={<Auth setUserId={setUserId}/>}/> */}
-        <Route path="/login" element={(user ? <Navigate to='/'/> : <Login/> )}/>
-        <Route path="/register" element={(user ? <Navigate to='/'/> : <Signup/> )}/>
+        <Route path="/signin" element={(user ? <Navigate to='/'/> : <Login/> )}/>
+        <Route path="/signup" element={(user ? <Navigate to='/'/> : <Signup/> )}/>
        
       </Routes>
     </BrowserRouter>

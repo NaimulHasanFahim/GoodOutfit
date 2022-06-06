@@ -1,8 +1,10 @@
-import { Badge, Search, ShoppingCartOutlined } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
 const Container = styled.div`
   /* height: 60px; */
   height: 60px ;
@@ -59,6 +61,10 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+  const cart = useSelector(state=>state.cart);
+  console.log(cart);
+
+
   return (
     <Container>
       <Wrapper>
@@ -70,16 +76,18 @@ const Navbar = () => {
           </SearchContanier>
         </Left>
         <Center>
+          <Link to="/" style={{textDecoration : "none", color: "black"}}>
           <Logo>E-COMMERCE</Logo>
+          </Link>
         </Center>
         <Right>
-        <MenuItem><Link style={{ textDecoration: 'none' }} to='/login'>SIGNIN</Link></MenuItem>
-          <MenuItem><Link style={{ textDecoration: 'none' }} to='/register'>SIGNUP</Link></MenuItem>
+        <MenuItem><Link style={{ textDecoration: 'none', color:"black" }} to='/signin'>SIGNIN</Link></MenuItem>
+          <MenuItem><Link style={{ textDecoration: 'none', color:"black" }} to='/signup'>SIGNUP</Link></MenuItem>
           
           <MenuItem>
-          <Link Link style={{ textDecoration: 'none' }} to='/cart'>
-            <Badge>
-              <ShoppingCartOutlined />
+          <Link Link style={{ textDecoration: 'none', color:"black" }} to='/cart'>
+            <Badge badgeContent={cart.quantity} color="primary">
+              <ShoppingCartIcon />
             </Badge>
             </Link>
           </MenuItem>

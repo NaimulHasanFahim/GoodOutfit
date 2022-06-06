@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { signin } from "../actions/auth";
 
 const Container = styled.div`
   width: 100vw;
@@ -53,19 +56,37 @@ const Link = styled.a`
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
+  color: black ;
 `;
+const initialState = {password: '', email:'' };
 
 const Login = () => {
+  const dispatch = useDispatch();  
+
+  const [formData, setFormData] = useState(initialState);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log("Hello")
+    console.log(formData)
+    dispatch(signin(formData))
+    }
+
+const handleChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value})
+}
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
-        <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
+        <Form onSubmit={handleSubmit}>
+          <Input name="email" onChange={handleChange}  placeholder="Email" />
+          <Input name="password" onChange={handleChange}  type="password" placeholder="Password" />
+          <Button type="submit">LOGIN</Button>
           <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+
+          <Link href="/signup">CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
     </Container>

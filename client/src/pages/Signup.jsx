@@ -1,4 +1,8 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { signup } from "../actions/auth";
+
 
 const Container = styled.div`
   width: 100vw;
@@ -51,24 +55,40 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `;
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '', username:'', bankid:'01521532529', bankpass:'12345' };
 
 const Signup = () => {
+  const dispatch = useDispatch();  
+
+  const [formData, setFormData] = useState(initialState);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData)
+    dispatch(signup(formData))
+    }
+
+const handleChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value})
+}
   return (
+   
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        <Form onSubmit={handleSubmit}>
+          <Input name="firstName" onChange={handleChange}  placeholder="First name" />
+          <Input name="lastName" onChange={handleChange} placeholder="Last name" />
+          <Input name="username" onChange={handleChange}  placeholder="Username" />
+          <Input name="email" onChange={handleChange} placeholder="Email" />
+          <Input name="password" onChange={handleChange}  type="password" placeholder="Password" />
+          <Input  name="confirmPassword" onChange={handleChange} type="password" placeholder="Confirm password" />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button type="submit">CREATE</Button>
         </Form>
       </Wrapper>
     </Container>

@@ -7,6 +7,7 @@ import User from "../models/user.js";
 
 export const signin = async (req, res) => {
   const { email} = req.body;
+  console.log(req.body);
   
   try {
     const existingUser = await User.findOne({ email });
@@ -45,9 +46,8 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { username, email, password, confirmPassword, bankid, bankpass } =
+  const { firstName, lastName, username, email, password, confirmPassword, bankid, bankpass } =
     req.body;
-  // console.log("Inside SIGN UP");
   try {
     const existingUser = await User.findOne({ email });
 
@@ -61,13 +61,15 @@ export const signup = async (req, res) => {
       password,
       process.env.PASS_SECRET
     ).toString();
-
+    
     const hashedBankid = cryptoJs.AES.encrypt(
       bankpass,
       process.env.PASS_SECRET
     ).toString();
 
     const result = await User.create({
+      firstName, 
+      lastName,
       email,
       password: hashedPassword,
       username,
