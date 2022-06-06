@@ -4,7 +4,9 @@ import {
 } from '@mui/material';
 import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
-import CheckoutSuccess from './CheckoutSuccess';
+import styled from "styled-components";
+import CheckoutSuccess from './CheckoutSuccess/CheckoutSuccess';
+// import CheckoutSuccess from './CheckoutSuccess';
 import checkoutFormModel from './FormModel/checkoutFormModel';
 import formInitialValues from './FormModel/formInitialValues';
 import validationSchema from './FormModel/validationSchema';
@@ -12,9 +14,11 @@ import AddressForm from './Forms/AddressForm';
 import PaymentForm from './Forms/PaymentForm';
 import ReviewOrder from './ReviewOrder';
 
+const Container = styled.div`
+  `;
 
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping address', 'Payment details', 'Review your order', 'Success'];
 const { formId, formField } = checkoutFormModel;
 
 function _renderStepContent(step) {
@@ -25,16 +29,20 @@ function _renderStepContent(step) {
       return <PaymentForm formField={formField} />;
     case 2:
       return <ReviewOrder />;
+    case 3:
+      return <CheckoutSuccess/>
     default:
       return <div>Not Found</div>;
   }
 }
 
-export default function CheckoutPage() {
+
+const CheckoutPage = () =>{
   // const classes = useStyles();
+  console.log(steps.length);
   const [activeStep, setActiveStep] = useState(0);
   const currentValidationSchema = validationSchema[activeStep];
-  const isLastStep = activeStep === steps.length - 1;
+  const isLastStep = activeStep === steps.length-2;
 
   function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -51,6 +59,7 @@ export default function CheckoutPage() {
   function _handleSubmit(values, actions) {
     if (isLastStep) {
       _submitForm(values, actions);
+      console.log(values);
     } else {
       setActiveStep(activeStep + 1);
       actions.setTouched({});
@@ -63,8 +72,8 @@ export default function CheckoutPage() {
   }
 
   return (
-    <React.Fragment>
-      <Typography component="h1" variant="h4" align="center">
+    <Container>
+      <Typography style={{marginTop : "5px", marginBottom : "5px"}} component="h1" variant="h5" align="center">
         Checkout
       </Typography>
       <Stepper activeStep={activeStep}>
@@ -75,7 +84,7 @@ export default function CheckoutPage() {
         ))}
       </Stepper>
       <React.Fragment>
-        {activeStep === steps.length ? (
+        {activeStep === steps.length-1 ? (
           <CheckoutSuccess />
         ) : (
           <Formik
@@ -86,10 +95,10 @@ export default function CheckoutPage() {
             {({ isSubmitting }) => (
               <Form id={formId}>
                 {_renderStepContent(activeStep)}
-
+                {/* Button portion */}
                 <div style={{display: 'flex',justifyContent: 'flex-end'}}>
                   {activeStep !== 0 && (
-                    <Button onClick={_handleBack} style={{ marginTop: '24px', marginLeft: '8px'}}>
+                    <Button onClick={_handleBack} style={{ marginTop: '1rem', marginLeft: '1rem'}}>
                       Back
                     </Button>
                   )}
@@ -99,7 +108,7 @@ export default function CheckoutPage() {
                       type="submit"
                       variant="contained"
                       color="primary"
-                      style={{ marginTop: '24px', marginLeft: '8px'}}
+                      style={{ marginTop: '1rem', marginLeft: '1rem'}}
                     >
                       {isLastStep ? 'Place order' : 'Next'}
                     </Button>
@@ -118,6 +127,8 @@ export default function CheckoutPage() {
           </Formik>
         )}
       </React.Fragment>
-    </React.Fragment>
+      </Container>
   );
 }
+
+export default CheckoutPage;

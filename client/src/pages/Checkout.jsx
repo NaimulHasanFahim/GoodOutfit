@@ -16,13 +16,22 @@ align-items: center ;
 
 const Wrapper = styled.div`
   padding: 5px;
-  width: 50%;
-  height: 40%;
+  justify-content: center ;
+  align-items: center ;
+  display: flex ;
+  flex-direction: column ;
+  
+`;
+
+const MultiForm = styled.div`
+  padding: 5px;
+  width: 50% ;
+  /* height: 60vh; */
   justify-content: center ;
   align-items: center ;
   
-
 `;
+
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart);
@@ -43,9 +52,12 @@ const Checkout = () => {
     
     <Container>
       <Wrapper>
+        <MultiForm>
         <CheckoutPage/>
+        </MultiForm>
+        <Footer />
       </Wrapper>
-      <Footer />
+      
     </Container>
     </div>
   );

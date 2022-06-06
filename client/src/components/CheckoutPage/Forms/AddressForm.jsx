@@ -1,65 +1,50 @@
-import { Grid, Typography } from '@mui/material';
-import React from 'react';
-import { CheckboxField, InputField, SelectField } from './../../FormFields';
+import { Grid, Typography } from "@mui/material";
+import React from "react";
+import styled from "styled-components";
+import { InputField, SelectField } from "./../../FormFields";
 
 const cities = [
   {
-    value: undefined,
-    label: 'None'
+    value: "1",
+    label: "Dhaka",
   },
   {
-    value: '1',
-    label: 'New York'
+    value: "2",
+    label: "Chittagong",
   },
   {
-    value: '2',
-    label: 'Chicago'
+    value: "3",
+    label: "Sylhet",
   },
   {
-    value: '3',
-    label: 'Saigon'
-  }
+    value: "4",
+    label: "Noakhali",
+  },
 ];
 
 const states = [
   {
-    value: undefined,
-    label: 'None'
+    value: "1",
+    label: "Dhaka",
   },
   {
-    value: '11',
-    label: 'Florida'
+    value: "2",
+    label: "Chittagong",
   },
   {
-    value: '22',
-    label: 'Michigan'
+    value: "3",
+    label: "Rangpur",
   },
-  {
-    value: '33',
-    label: 'Texas'
-  }
 ];
 
-const countries = [
-  {
-    value: null,
-    label: 'None'
-  },
-  {
-    value: '111',
-    label: 'United States'
-  },
-  {
-    value: '222',
-    label: 'Italy'
-  },
-  {
-    value: '333',
-    label: 'Vietnam'
-  }
-];
+
+const Container = styled.div`
+width: 90% ;
+height: 90% ;
+`;
 
 export default function AddressForm(props) {
+  // console.log(props);
   const {
     formField: {
       firstName,
@@ -69,16 +54,14 @@ export default function AddressForm(props) {
       city,
       state,
       zipcode,
-      country,
-      useAddressForPaymentDetails
-    }
+    },
   } = props;
   return (
-    <React.Fragment>
+    <Container>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={1}>
         <Grid item xs={12} sm={6}>
           <InputField name={firstName.name} label={firstName.label} fullWidth />
         </Grid>
@@ -110,21 +93,7 @@ export default function AddressForm(props) {
         <Grid item xs={12} sm={6}>
           <InputField name={zipcode.name} label={zipcode.label} fullWidth />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <SelectField
-            name={country.name}
-            label={country.label}
-            data={countries}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <CheckboxField
-            name={useAddressForPaymentDetails.name}
-            label={useAddressForPaymentDetails.label}
-          />
-        </Grid>
       </Grid>
-    </React.Fragment>
+    </Container>
   );
 }
