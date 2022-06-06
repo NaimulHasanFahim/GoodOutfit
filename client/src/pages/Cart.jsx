@@ -166,19 +166,21 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <Link to="/products" style={{textdecoration : "none"}}>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <Link to="/products" style={{ textdecoration: "none" }}>
+            <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <Link to="/checkout">
+            <TopButton type="filled">CHECKOUT NOW</TopButton>
+          </Link>
         </Top>
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <Product key={product._id+''+product.quantity}>
+              <Product key={product._id + "" + product.quantity}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -196,9 +198,15 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add style={{cursor : "pointer"}} onClick={() => handleQuantity("inc")} />
+                    <Add
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleQuantity("inc")}
+                    />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove style={{cursor : "pointer"}} onClick={() => handleQuantity("dec", product)}/>
+                    <Remove
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleQuantity("dec", product)}
+                    />
                   </ProductAmountContainer>
                   <ProductPrice>$ {product.price}</ProductPrice>
                 </PriceDetail>
@@ -224,7 +232,9 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Link to="/checkout">
+              <Button>CHECKOUT NOW</Button>
+            </Link>
           </Summary>
         </Bottom>
       </Wrapper>

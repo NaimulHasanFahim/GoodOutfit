@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import Login from './pages/Login';
 import Product from "./pages/Product";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/products/:category" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout/>} />
         {/* <Route path="/success" element={<Auth setUserId={setUserId}/>}/> */}
         <Route path="/signin" element={(user ? <Navigate to='/'/> : <Login/> )}/>
         <Route path="/signup" element={(user ? <Navigate to='/'/> : <Signup/> )}/>
