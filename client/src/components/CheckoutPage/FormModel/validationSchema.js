@@ -6,9 +6,11 @@ const {
     lastName,
     address1,
     city,
+    state,
     zipcode,
-    nameOnCard,
-    cardNumber,
+    email,
+    username,
+    accountNumber,
   }
 } = checkoutFormModel;
 
@@ -22,18 +24,14 @@ export default [
     [city.name]: Yup.string()
       .nullable()
       .required(`${city.requiredErrorMsg}`),
-    [zipcode.name]: Yup.string()
-      .required(`${zipcode.requiredErrorMsg}`)
-      .test(
-        'len',
-        `${zipcode.invalidErrorMsg}`,
-        val => val && val.length === 5
-      ),
+      [state.name]: Yup.string()
+      .nullable()
+      .required(`${city.requiredErrorMsg}`),
   }),
   Yup.object().shape({
-    [nameOnCard.name]: Yup.string().required(`${nameOnCard.requiredErrorMsg}`),
-    [cardNumber.name]: Yup.string()
-      .required(`${cardNumber.requiredErrorMsg}`)
-      .matches(visaRegEx, cardNumber.invalidErrorMsg),
+    [username.name]: Yup.string().required(`${username.requiredErrorMsg}`),
+    [accountNumber.name]: Yup.string().required(`${accountNumber.requiredErrorMsg}`),
+    [email.name]: Yup.string().required(`${email.requiredErrorMsg}`),
+    
   })
 ];

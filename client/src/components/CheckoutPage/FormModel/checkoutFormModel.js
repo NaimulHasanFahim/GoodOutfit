@@ -27,28 +27,34 @@ export default {
     },
     state: {
       name: "state",
-      label: "State/Province/Region",
+      label: "District",
     },
     zipcode: {
       name: "zipcode",
       label: "Zipcode*",
       requiredErrorMsg: "Zipcode is required",
-      invalidErrorMsg: "Zipcode is not valid (e.g. 70000)",
+      invalidErrorMsg: "Zipcode is not valid (e.g. 3344)",
     },
     useAddressForPaymentDetails: {
       name: "useAddressForPaymentDetails",
       label: "Use this address for payment details",
     },
-    nameOnCard: {
-      name: "nameOnCard",
-      label: "Name on card*",
-      requiredErrorMsg: "Name on card is required",
+    username: {
+      name: "username",
+      label: "Name of Account*",
+      requiredErrorMsg: "Name of the Bank Account is required",
     },
-    cardNumber: {
-      name: "cardNumber",
-      label: "Card number*",
-      requiredErrorMsg: "Card number is required",
-      invalidErrorMsg: "Card number is not valid (e.g. 4111111111111)",
+    email: {
+      name: "email",
+      label: "Email of the Account Holder*",
+      requiredErrorMsg: "Email of the Bank Account user",
+    },
+    accountNumber: {
+      name: "accountNumber",
+      label: "Account number*",
+      requiredErrorMsg: "Account number is required",
+      invalidErrorMsg: "Account number is not valid (e.g. 01811111111)",
     },
   },
 };
+

@@ -6,7 +6,8 @@ import {
 import { useField } from 'formik';
 import { at } from 'lodash';
 import React from 'react';
-export default function CheckboxField(props) {
+
+const CheckboxField = (props)=>{
   const { label, ...rest } = props;
   const [field, meta, helper] = useField(props);
   const { setValue } = helper;
@@ -34,3 +35,5 @@ export default function CheckboxField(props) {
     </FormControl>
   );
 }
+
+export default CheckboxField;

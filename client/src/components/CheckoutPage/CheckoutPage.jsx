@@ -12,7 +12,7 @@ import formInitialValues from './FormModel/formInitialValues';
 import validationSchema from './FormModel/validationSchema';
 import AddressForm from './Forms/AddressForm';
 import PaymentForm from './Forms/PaymentForm';
-import ReviewOrder from './ReviewOrder';
+import ReviewOrder from './ReviewOrder/ReviewOrder';
 
 const Container = styled.div`
   `;
@@ -21,14 +21,14 @@ const Container = styled.div`
 const steps = ['Shipping address', 'Payment details', 'Review your order', 'Success'];
 const { formId, formField } = checkoutFormModel;
 
-function _renderStepContent(step) {
+function _renderStepContent(step, cart) {
   switch (step) {
     case 0:
       return <AddressForm formField={formField} />;
     case 1:
       return <PaymentForm formField={formField} />;
     case 2:
-      return <ReviewOrder />;
+      return <ReviewOrder cart={cart}/>;
     case 3:
       return <CheckoutSuccess/>
     default:
@@ -37,9 +37,10 @@ function _renderStepContent(step) {
 }
 
 
-const CheckoutPage = () =>{
+const CheckoutPage = ({cart}) =>{
   // const classes = useStyles();
-  console.log(steps.length);
+  // console.log(steps.length);
+  // console.log(cart);
   const [activeStep, setActiveStep] = useState(0);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length-2;
@@ -52,6 +53,7 @@ const CheckoutPage = () =>{
     await _sleep(1000);
     alert(JSON.stringify(values, null, 2));
     actions.setSubmitting(false);
+    
 
     setActiveStep(activeStep + 1);
   }
@@ -94,7 +96,7 @@ const CheckoutPage = () =>{
           >
             {({ isSubmitting }) => (
               <Form id={formId}>
-                {_renderStepContent(activeStep)}
+                {_renderStepContent(activeStep, cart)}
                 {/* Button portion */}
                 <div style={{display: 'flex',justifyContent: 'flex-end'}}>
                   {activeStep !== 0 && (

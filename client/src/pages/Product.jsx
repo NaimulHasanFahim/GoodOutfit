@@ -113,7 +113,7 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const Product = ({user, setUser}) => {
   const location = useLocation();
   // console.log(location);
   const id = location.pathname.split("/")[2];
@@ -156,7 +156,7 @@ const Product = () => {
 
   return (
     <Container>
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
       <Announcement />
       <Wrapper>
         <ImgContainer>

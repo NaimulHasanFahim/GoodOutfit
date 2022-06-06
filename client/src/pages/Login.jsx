@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signin } from "../actions/auth";
 import Navbar from "../components/Navbar";
@@ -43,15 +44,6 @@ const Input = styled.input`
   padding: 10px;
 `;
 
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: #22543d;
-  color: white;
-  cursor: pointer;
-  margin-bottom: 10px;
-`;
 
 const Link = styled.a`
   margin: 5px 0px;
@@ -60,18 +52,38 @@ const Link = styled.a`
   cursor: pointer;
   color: black;
 `;
-const initialState = { password: "", email: "" };
 
-const Login = () => {
+const Error = styled.span`
+  color: red;
+`;
+
+
+const Button = styled.button`
+  width: 40%;
+  border: none;
+  padding: 15px 20px;
+  background-color: teal;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
+`;
+
+const initialState = { password: "", email: "" };
+const Login = ({user, setUser}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(initialState);
-
+  const { isFetching, error } = useSelector((state) => state.user);
+  // console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("Hello")
-    console.log(formData);
-    dispatch(signin(formData));
+    dispatch(signin(formData,navigate, setUser));
   };
 
   const handleChange = (e) => {
@@ -79,7 +91,7 @@ const Login = () => {
   };
   return (
     <div>
-      <Navbar />
+      <Navbar user={user}/>
       <Container>
         <Wrapper>
           <Title>SIGN IN</Title>
@@ -91,9 +103,9 @@ const Login = () => {
               type="password"
               placeholder="Password"
             />
-            <Button type="submit">LOGIN</Button>
+            <Button  type="submit">LOGIN</Button>
+            {error && <Error>Something went wrong...</Error>}
             <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-
             <Link href="/signup">CREATE A NEW ACCOUNT</Link>
           </Form>
         </Wrapper>

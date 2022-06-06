@@ -5,10 +5,12 @@ const {
     lastName,
     address1,
     city,
+    state,
     zipcode,
-    useAddressForPaymentDetails,
-    nameOnCard,
-    cardNumber,
+    email,
+    username,
+    accountNumber,
+    useAddressForPaymentDetails
   }
 } = checkoutFormModel;
 
@@ -19,6 +21,8 @@ export default {
   [city.name]: '',
   [zipcode.name]: '',
   [useAddressForPaymentDetails.name]: false,
-  [nameOnCard.name]: '',
-  [cardNumber.name]: '',
+  [email.name]: '',
+  [username.name]: '',
+  [state.name]: '',
+  [accountNumber.name]: '',
 };

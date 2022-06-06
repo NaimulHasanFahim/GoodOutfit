@@ -1,14 +1,15 @@
 import { Search } from "@mui/icons-material";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
 import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { signout } from "../actions/auth";
 const Container = styled.div`
   /* height: 60px; */
-  height: 60px ;
-  align-items: center ;
+  height: 60px;
+  align-items: center;
 `;
 
 const Wrapper = styled.div`
@@ -60,10 +61,16 @@ const MenuItem = styled.div`
   margin-left: 25px;
 `;
 
-const Navbar = () => {
-  const cart = useSelector(state=>state.cart);
-  console.log(cart);
+const Navbar = ({user, setUser}) => {
+  // const [user, setUser] = useState(useSelector((state) => state.user.currentuser));
+  const cart = useSelector((state) => state.cart);
+  // console.log(user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const LogOut =( )=>{
+    dispatch(signout(navigate, setUser));
+  }
 
   return (
     <Container>
@@ -71,28 +78,72 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContanier>
-            <Input placeholder="Search"  />
+            <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContanier>
         </Left>
         <Center>
-          <Link to="/" style={{textDecoration : "none", color: "black"}}>
-          <Logo>E-COMMERCE</Logo>
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <Logo>E-COMMERCE</Logo>
           </Link>
         </Center>
-        <Right>
-        <MenuItem><Link style={{ textDecoration: 'none', color:"black" }} to='/signin'>SIGNIN</Link></MenuItem>
-          <MenuItem><Link style={{ textDecoration: 'none', color:"black" }} to='/signup'>SIGNUP</Link></MenuItem>
-          
-          <MenuItem>
-          <Link Link style={{ textDecoration: 'none', color:"black" }} to='/cart'>
-            <Badge badgeContent={cart.quantity} color="primary">
-              <ShoppingCartIcon />
-            </Badge>
-            </Link>
-          </MenuItem>
-          {/* </Link> */}
-        </Right>
+
+        {user===null  || user===undefined ? (
+          <Right>
+            <MenuItem>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/signin"
+              >
+                SIGNIN
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/signup"
+              >
+                SIGNUP
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/cart"
+              >
+                <Badge badgeContent={cart.quantity} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </Link>
+            </MenuItem>
+          </Right>
+        ) : (
+          <Right>
+            <MenuItem>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/signin"
+              >
+                Profile
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={LogOut}> 
+              Logout
+            </MenuItem>
+            <MenuItem>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/cart"
+              >
+                <Badge badgeContent={cart.quantity} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </Link>
+            </MenuItem>
+          </Right>
+        )}
+
+        {/* </Link> */}
       </Wrapper>
     </Container>
   );

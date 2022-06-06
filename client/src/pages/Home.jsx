@@ -6,11 +6,12 @@ import Navbar from "../components/Navbar.jsx";
 import Newsletter from "../components/Newsletter.jsx";
 import Products from "../components/Products.jsx";
 import Slider from "../components/Slider.jsx";
-const Home = () => {
+const Home = ({user, setUser}) => {
+  
   return (
     <div>
       <Announcement />
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
       <Slider />
       <Categories />
       <Products />

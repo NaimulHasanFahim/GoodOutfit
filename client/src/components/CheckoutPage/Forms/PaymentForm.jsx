@@ -1,8 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import styled from "styled-components";
-import { InputField } from '../../FormFields';
-
+import InputField from '../../FormFields/InputField';
 
 
 const Container = styled.div`
@@ -13,7 +12,7 @@ height: 70% ;
 
 export default function PaymentForm(props) {
   const {
-    formField: { nameOnCard, cardNumber }
+    formField: { username, accountNumber, email}
   } = props;
 
   return (
@@ -24,15 +23,22 @@ export default function PaymentForm(props) {
       <Grid container spacing={3}>
         <Grid item xs={8} md={12}  fullWidth>
           <InputField
-            name={nameOnCard.name}
-            label={nameOnCard.label}
+            name={username.name}
+            label={username.label}
             fullWidth
           />
         </Grid>
         <Grid item xs={8} md={12}>
           <InputField
-            name={cardNumber.name}
-            label={cardNumber.label}
+            name={accountNumber.name}
+            label={accountNumber.label}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={8} md={12}>
+          <InputField
+            name={email.name}
+            label={email.label}
             fullWidth
           />
         </Grid>

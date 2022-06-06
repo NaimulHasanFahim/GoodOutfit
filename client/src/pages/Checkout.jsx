@@ -4,36 +4,31 @@ import CheckoutPage from "../components/CheckoutPage/CheckoutPage";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
-
 const Container = styled.div`
-position: relative ;
-display: flex;
-flex-direction: column;
-justify-content: center ;
-align-items: center ;
-  `;
-
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Wrapper = styled.div`
   padding: 5px;
-  justify-content: center ;
-  align-items: center ;
-  display: flex ;
-  flex-direction: column ;
-  
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 const MultiForm = styled.div`
   padding: 5px;
-  width: 50% ;
+  width: 50%;
   /* height: 60vh; */
-  justify-content: center ;
-  align-items: center ;
-  
+  justify-content: center;
+  align-items: center;
 `;
 
-
-const Checkout = () => {
+const Checkout = ({ user, setUser }) => {
   const cart = useSelector((state) => state.cart);
 
   const handleQuantity = (type) => {
@@ -48,17 +43,16 @@ const Checkout = () => {
 
   return (
     <div>
-      <Navbar />
-    
-    <Container>
-      <Wrapper>
-        <MultiForm>
-        <CheckoutPage/>
-        </MultiForm>
-        <Footer />
-      </Wrapper>
-      
-    </Container>
+      <Navbar user={user} setUser={setUser} />
+
+      <Container>
+        <Wrapper>
+          <MultiForm>
+            <CheckoutPage cart={cart}/>
+          </MultiForm>
+          <Footer />
+        </Wrapper>
+      </Container>
     </div>
   );
 };

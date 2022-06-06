@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signup } from "../actions/auth";
 import Navbar from "../components/Navbar";
@@ -69,15 +70,16 @@ const initialState = {
   bankpass: "12345",
 };
 
-const Signup = () => {
+const Signup = ({user, setUser}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    dispatch(signup(formData));
+    dispatch(signup(formData, navigate));
   };
 
   const handleChange = (e) => {
@@ -85,7 +87,7 @@ const Signup = () => {
   };
   return (
     <div>
-      <Navbar />
+      <Navbar user={user} setUser={setUser}/>
       <Container>
         <Wrapper>
           <Title>CREATE AN ACCOUNT</Title>

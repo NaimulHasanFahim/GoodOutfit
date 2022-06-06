@@ -146,7 +146,7 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-const Cart = () => {
+const Cart = ({user, setUser}) => {
   const cart = useSelector((state) => state.cart);
 
   const handleQuantity = (type) => {
@@ -161,7 +161,7 @@ const Cart = () => {
 
   return (
     <Container>
-      <Navbar />
+      <Navbar user={user} setUser={setUser}/>
       <Announcement />
       <Wrapper>
         <Title>YOUR BAG</Title>

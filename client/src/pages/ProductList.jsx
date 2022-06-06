@@ -34,7 +34,7 @@ const Select = styled.select`
 `;
 const Option = styled.option``;
 
-const ProductList = () => {
+const ProductList = ({user, setUser}) => {
   const location = useLocation();
   // console.log(location);
   const cat = location.pathname.split("/")[2];
@@ -54,7 +54,7 @@ const ProductList = () => {
 
   return (
     <Container>
-      <Navbar />
+      <Navbar user={user} setUser={setUser}/>
       <Announcement />
       <Title>{cat}</Title>
       <FilterContainer>

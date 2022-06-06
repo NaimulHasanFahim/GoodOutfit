@@ -9,20 +9,25 @@ const products = [
   { name: 'Shipping', desc: '', price: 'Free' }
 ];
 
-function ProductDetails() {
+// import { useState } from 'react';
+
+const ProductDetails = ({cart})=>{
   // const classes = useStyles();
+  // const cart = useSelector(state=>state.user.currentUser);
+  const products=cart.products;
+  console.log(products);
   return (
     <List disablePadding>
       {products.map(product => (
-        <ListItem style={{padding: "1 0"}} key={product.name}>
-          <ListItemText primary={product.name} secondary={product.desc} />
-          <Typography variant="body2">{product.price}</Typography>
+        <ListItem style={{padding: "1 0"}} key={product._id}>
+          <ListItemText primary={product.title} secondary={product.desc} />
+          <Typography variant="body2">$ {product.price}</Typography>
         </ListItem>
       ))}
       <ListItem style={{padding: "1 0"}}>
         <ListItemText primary="Total" />
         <Typography variant="subtitle1" style={{fontWeight: '700'}}>
-          $34.06
+          $ {cart.total}
         </Typography>
       </ListItem>
     </List>

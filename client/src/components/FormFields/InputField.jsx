@@ -3,7 +3,7 @@ import { useField } from 'formik';
 import { at } from 'lodash';
 import React from 'react';
 
-export default function InputField(props) {
+const InputField = (props)=>{
   const { errorText, ...rest } = props;
   const [field, meta] = useField(props);
 
@@ -24,3 +24,5 @@ export default function InputField(props) {
     />
   );
 }
+
+export default InputField;

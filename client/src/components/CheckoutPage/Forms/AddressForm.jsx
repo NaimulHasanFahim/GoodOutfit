@@ -1,7 +1,9 @@
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { InputField, SelectField } from "./../../FormFields";
+import InputField from "../../FormFields/InputField";
+import SelectField from "../../FormFields/SelectField";
+
 
 const cities = [
   {

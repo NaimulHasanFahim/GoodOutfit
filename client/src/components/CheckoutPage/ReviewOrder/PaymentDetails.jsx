@@ -1,49 +1,48 @@
 import { Grid, Typography } from '@mui/material';
-import moment from 'moment';
 import React from 'react';
 
 function PaymentDetails(props) {
   const { formValues } = props;
   // const classes = useStyles();
-  const { nameOnCard, cardNumber, expiryDate } = formValues;
+  const { accountNumber, email, username } = formValues;
   return (
     <Grid item container direction="column" xs={12} sm={6}>
       <Typography variant="h6" gutterBottom style={{ marginTop: "16px"}}>
-        Payment details
+        Payment details using E-Bank
       </Typography>
       <Grid container>
         <React.Fragment>
           <Grid item xs={6}>
-            <Typography gutterBottom>Card type</Typography>
+            <Typography gutterBottom>Payment Method</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography gutterBottom>Visa</Typography>
-          </Grid>
-        </React.Fragment>
-        <React.Fragment>
-          <Grid item xs={6}>
-            <Typography gutterBottom>Card holder</Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography gutterBottom>{nameOnCard}</Typography>
+            <Typography gutterBottom>E-Bank</Typography>
           </Grid>
         </React.Fragment>
         <React.Fragment>
           <Grid item xs={6}>
-            <Typography gutterBottom>Card number</Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography gutterBottom>{cardNumber}</Typography>
-          </Grid>
-        </React.Fragment>
-        <React.Fragment>
-          <Grid item xs={6}>
-            <Typography gutterBottom>Expiry Date</Typography>
+            <Typography gutterBottom>Email</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography gutterBottom>
-              {moment(expiryDate).format('MM/YY')}
+              {email}
             </Typography>
+          </Grid>
+        </React.Fragment>
+        <React.Fragment>
+          <Grid item xs={6}>
+            <Typography gutterBottom>Account holder</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography gutterBottom>{username}</Typography>
+          </Grid>
+        </React.Fragment>
+        <React.Fragment>
+          <Grid item xs={6}>
+            <Typography gutterBottom>Account number</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography gutterBottom>{accountNumber}</Typography>
           </Grid>
         </React.Fragment>
       </Grid>
