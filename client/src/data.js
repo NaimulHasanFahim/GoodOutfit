@@ -1,21 +1,21 @@
 export const sliderItems = [
     {
       id: 1,
-      img: "https://i.ibb.co/DG69bQ4/2.png",
+      img: "",
       title: "SUMMER SALE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "f5fafd",
     },
     {
       id: 2,
-      img: "https://i.ibb.co/DG69bQ4/2.png",
+      img: "",
       title: "AUTUMN COLLECTION",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fcf1ed",
     },
     {
       id: 3,
-      img: "https://i.ibb.co/cXFnLLV/3.png",
+      img: "",
       title: "LOUNGEWEAR LOVE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fbf0f4",
@@ -25,19 +25,20 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "SHIRT STYLE!",
+      img : "https://5.imimg.com/data5/TX/VF/MY-33407711/men-winter-wear-cloth-500x500.jpg",
+      // img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      title: "Winter Collection!",
       cat: "women"
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
+      img: "https://static.fibre2fashion.com/MemberResources/LeadResources/1/2018/6/Buyer/18149228/Images/18149228_0_kids-sport-wear.jpg",
+      title: "Sports",
       cat: "man"
     },
     {
       id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      img : "https://gearmoose.com/wp-content/uploads/2019/09/Best-Lightweight-Jackets-For-Fall-1.jpg",// img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       title: "LIGHT JACKETS",
       cat: "child"
     },

@@ -2,9 +2,13 @@ import jsonwebtoken from "jsonwebtoken";
 
 
 export const verifyToken = (req, res, next) => {
-  const authHeader = req.headers.token;
+  // console.log(req.headers);
+  const authHeader = req.body.token;
+  // console.log(authHeader);
   if (authHeader) {
-    const token = authHeader.split(" ")[1];
+    // const token = authHeader.split(" ")[1];
+    const token = authHeader;
+    // console.log(token);
     jsonwebtoken.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) res.status(403).json("Token is not valid!");
       req.user = user;
@@ -24,7 +28,6 @@ export const verifyTokenAndAuthorization = (req, res, next) => {
     }
   });
 };
-
 export const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {

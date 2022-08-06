@@ -28,8 +28,21 @@ const MultiForm = styled.div`
   align-items: center;
 `;
 
+
+const Container1 = styled.div`
+  height: 30px;
+  background-color: teal;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+`;
+
 const Checkout = ({ user, setUser }) => {
   const cart = useSelector((state) => state.cart);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   const handleQuantity = (type) => {
     if (type === "dec") {
@@ -41,14 +54,16 @@ const Checkout = ({ user, setUser }) => {
     }
   };
 
+
+
   return (
     <div>
       <Navbar user={user} setUser={setUser} />
-
+      <Container1/>
       <Container>
         <Wrapper>
           <MultiForm>
-            <CheckoutPage cart={cart}/>
+            <CheckoutPage cart={cart} currentUser={currentUser}/>
           </MultiForm>
           <Footer />
         </Wrapper>

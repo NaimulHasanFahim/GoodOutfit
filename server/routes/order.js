@@ -5,13 +5,52 @@ const router = express.Router();
 
 //CREATE
 
-router.post("/", verifyToken, async (req, res) => {
-  const newOrder = new Order(req.body);
+// async function getTransaction(bankdata){
+//   const t = bankdata;
+//   try {
+//     const {data:response} = await axios.post('http://localhost:8000/transaction/payment',t).then(); //use data destructuring to get data from the promise object
+//     return response
+//   }
+//   catch (error) {
+//     console.log(error);
+//   }
+  
+//   // // console.log(bankdata);
+//   // let pp={};
+//   // const { data} = await axios.post('http://localhost:8000/transaction/payment',t)
+//   //   .then(response => {
+//   //     // const {data} = response;
+//   //     // console.log(data);
+//   //     // pp=data;
+//   //     response;
+//   //   })
+//   //   .catch(error => {
+//   //     console.log(error);
+//   //   });
+//   //   console.log(data);
+//   //   return pp;
+  
+// }
 
+router.post("/", verifyToken, async (req, res) => {
+  
+  const {userId, products, amount, address, bankData} = req.body;
+
+  // console.log(bankData);
   try {
-    const savedOrder = await newOrder.save();
-    res.status(200).json(savedOrder);
-  } catch (err) {
+    // let transactiondata = getTransaction(bankData);
+    // console.log(transactiondata);
+    const newOrder = new Order({
+      transactionId: bankData.transactionId,
+      userId,
+      products,
+      amount,
+      address,
+    });
+    // console.log(newOrder);
+    const result = await newOrder.save();
+    console.log(result);  
+    } catch (err) {
     res.status(500).json(err);
   }
 });

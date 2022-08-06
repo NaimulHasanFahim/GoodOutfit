@@ -14,6 +14,7 @@ const userSlice = createSlice({
     signinSuccess: (state, action) => {
       state.isFetching = false;
       state.currentUser = action.payload;
+      window.location.reload();
     },
     signinFailure: (state) => {
       state.isFetching = false;
@@ -26,6 +27,7 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.currentUser = action.payload;
       state.error = false;
+      window.location.reload();
     },
     signupFailure: (state) => {
       state.isFetching = false;
@@ -34,6 +36,9 @@ const userSlice = createSlice({
     logout: (state) => {
       state.currentUser = null;
       state.error = false;
+      // window.localStorage.removeItem('persist:root');
+      // storage.removeItem('persist:root')
+      // storage.removeItem('persist:otherKey')
     },
   },
 });

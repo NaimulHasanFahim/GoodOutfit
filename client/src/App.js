@@ -13,8 +13,8 @@ import Signup from "./pages/Signup";
 function App() {
   const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
   console.log(user);
-
-  
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
   return (
     <BrowserRouter>
       <Routes>

@@ -2,9 +2,12 @@ import {
   Button, CircularProgress, Step,
   StepLabel, Stepper, Typography
 } from '@mui/material';
+import axios from 'axios';
 import { Form, Formik } from 'formik';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from "styled-components";
+import { createOrder } from '../../actions/orders';
 import CheckoutSuccess from './CheckoutSuccess/CheckoutSuccess';
 // import CheckoutSuccess from './CheckoutSuccess';
 import checkoutFormModel from './FormModel/checkoutFormModel';
@@ -13,6 +16,7 @@ import validationSchema from './FormModel/validationSchema';
 import AddressForm from './Forms/AddressForm';
 import PaymentForm from './Forms/PaymentForm';
 import ReviewOrder from './ReviewOrder/ReviewOrder';
+
 
 const Container = styled.div`
   `;
@@ -36,14 +40,16 @@ function _renderStepContent(step, cart) {
   }
 }
 
+const API = axios.create({ baseURL: 'http://localhost:8000' });
 
-const CheckoutPage = ({cart}) =>{
+const CheckoutPage = ({cart, currentUser}) =>{
   // const classes = useStyles();
   // console.log(steps.length);
   // console.log(cart);
   const [activeStep, setActiveStep] = useState(0);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length-2;
+  const dispatch = useDispatch();
 
   function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -51,8 +57,30 @@ const CheckoutPage = ({cart}) =>{
 
   async function _submitForm(values, actions) {
     await _sleep(1000);
+    const temp =JSON.stringify(values, null, 2);
+    // (currentUser, cart, addressData, bankData)
+    const addressData = {"address1" : values.address1, "city" : values.city};
+    const bankData ={"sender" : values.accountNumber,"transactionId" : "", "reciever" : "01621532529" , "password" : values.password, "amount" : 100};
+    // console.log(bankData);
+    // console.log(addressData);
+    try{
+      const ans = API.post('/transaction/payment', bankData);
+      ans.then(function(result){
+        console.log(result);
+        bankData.transactionId = result.data.Transaction_ID;
+        dispatch(createOrder(currentUser, cart, addressData, bankData));
+      })
+      // console.log(ans);
+    }catch(error){
+
+    }
+
+    // const res = API.post('/transaction/payment', data);
+    // console.log(res);
+
     alert(JSON.stringify(values, null, 2));
     actions.setSubmitting(false);
+
     
 
     setActiveStep(activeStep + 1);
