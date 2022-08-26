@@ -34,6 +34,7 @@ export const fetchAllProducts = ( ) => API.get(`/posts`);
 export const signIn = (formData) => API.post('/auth/signin', formData);
 export const signUp = (formData) => API.post('/auth/signup', formData);
 export const makeOrder = (formData) => userRequest.post('/orders/', formData);
+export const getOrdersDetailsByUserId = (userId) => userRequest.get(`/orders/find/${userId}`);
 // export const getUsersById = (id) => API.get(`/profile/${id}`);
 // export const fetchSingleUserPosts = (id) => API.get(`/posts/single/${id}`);
 // export const updateUserProfile = (id, userData) => API.patch(`/user/update/${id}`, userData);

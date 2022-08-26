@@ -10,13 +10,13 @@ import styled from "styled-components";
 import { createOrder } from '../../actions/orders';
 import CheckoutSuccess from './CheckoutSuccess/CheckoutSuccess';
 // import CheckoutSuccess from './CheckoutSuccess';
+import { clearCart } from './../../redux/cartRedux';
 import checkoutFormModel from './FormModel/checkoutFormModel';
 import formInitialValues from './FormModel/formInitialValues';
 import validationSchema from './FormModel/validationSchema';
 import AddressForm from './Forms/AddressForm';
 import PaymentForm from './Forms/PaymentForm';
 import ReviewOrder from './ReviewOrder/ReviewOrder';
-
 
 const Container = styled.div`
   `;
@@ -40,7 +40,7 @@ function _renderStepContent(step, cart) {
   }
 }
 
-const API = axios.create({ baseURL: 'http://localhost:8000' });
+const API = axios.create({ baseURL: 'http://localhost:8000/api' });
 
 const CheckoutPage = ({cart, currentUser}) =>{
   // const classes = useStyles();
@@ -50,6 +50,7 @@ const CheckoutPage = ({cart, currentUser}) =>{
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length-2;
   const dispatch = useDispatch();
+  const [ newOrderId,setNewOrderId] = useState(null);
 
   function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -63,33 +64,26 @@ const CheckoutPage = ({cart, currentUser}) =>{
     const bankData ={"sender" : values.accountNumber,"transactionId" : "", "reciever" : "01621532529" , "password" : values.password, "amount" : 100};
     // console.log(bankData);
     // console.log(addressData);
+    
     try{
       const ans = API.post('/transaction/payment', bankData);
       ans.then(function(result){
-        console.log(result);
+        // console.log(result);
         bankData.transactionId = result.data.Transaction_ID;
-        dispatch(createOrder(currentUser, cart, addressData, bankData));
+        dispatch(createOrder(currentUser, cart, addressData, bankData, setNewOrderId));
+        dispatch(clearCart());
       })
       // console.log(ans);
     }catch(error){
-
+      console.log(error);
     }
-
-    // const res = API.post('/transaction/payment', data);
-    // console.log(res);
-
-    alert(JSON.stringify(values, null, 2));
     actions.setSubmitting(false);
-
-    
-
     setActiveStep(activeStep + 1);
   }
 
   function _handleSubmit(values, actions) {
     if (isLastStep) {
       _submitForm(values, actions);
-      console.log(values);
     } else {
       setActiveStep(activeStep + 1);
       actions.setTouched({});
@@ -115,7 +109,7 @@ const CheckoutPage = ({cart, currentUser}) =>{
       </Stepper>
       <React.Fragment>
         {activeStep === steps.length-1 ? (
-          <CheckoutSuccess />
+          <CheckoutSuccess newOrderId={newOrderId}/>
         ) : (
           <Formik
             initialValues={formInitialValues}

@@ -124,7 +124,7 @@ const Navbar = ({user, setUser}) => {
             <MenuItem>
               <Link
                 style={{ textDecoration: "none", color: "black" }}
-                to="/signin"
+                to="/profile"
               >
                 Profile
               </Link>

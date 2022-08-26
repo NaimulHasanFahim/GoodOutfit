@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middleware/middle.js";
+import { verifyToken, verifyTokenAndAdmin } from "../middleware/middle.js";
 import Order from './../models/Order.js';
 const router = express.Router();
 
@@ -36,10 +36,9 @@ router.post("/", verifyToken, async (req, res) => {
   
   const {userId, products, amount, address, bankData} = req.body;
 
-  // console.log(bankData);
+  // console.log(req.body);
   try {
-    // let transactiondata = getTransaction(bankData);
-    // console.log(transactiondata);
+    
     const newOrder = new Order({
       transactionId: bankData.transactionId,
       userId,
@@ -82,7 +81,8 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //GET USER ORDERS
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:userId", async (req, res) => {
+  // console.log(req.params);
   try {
     const orders = await Order.find({ userId: req.params.userId });
     res.status(200).json(orders);

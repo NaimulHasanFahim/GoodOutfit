@@ -6,8 +6,9 @@ const currentUser = user && JSON.parse(user).currentUser;
 const TOKEN = currentUser?.token;
 
 
-export const createOrder = (currentUser, cart, addressData, bankData) => async (dispatch) => {
+export const createOrder = (currentUser, cart, addressData, bankData, setNewOrderId) => async (dispatch) => {
   const userId = currentUser.existingUser._id;  
+  // console.log(userId);
   try {
         const res = await api.makeOrder({
           token : TOKEN,
@@ -20,8 +21,22 @@ export const createOrder = (currentUser, cart, addressData, bankData) => async (
             address: `${addressData.address1}, ${addressData.city}` ,
             bankData : bankData
           });
-          console.log(res);
     } catch (error) {
         console.log(error);
     }
   };
+
+  
+export const getOrdersByUserId = (currentUser) => async (dispatch) => {
+  // console.log(currentUser);
+  const userId = currentUser.existingUser._id;  
+  // console.log(userId);
+  try {
+        const res = await api.getOrdersDetailsByUserId(userId);
+        console.log(res);
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
+  

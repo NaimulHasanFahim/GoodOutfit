@@ -10,7 +10,9 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { addProduct } from "../redux/cartRedux";
 
-const Container = styled.div``;
+const Container = styled.div`
+margin: 2px 2px;
+`;
 
 const Wrapper = styled.div`
   padding: 50px;
