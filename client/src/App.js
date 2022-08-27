@@ -12,6 +12,14 @@ import ProductList from "./pages/ProductList";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 
+// ADMIN IMPORTS 
+import { productInputs, userInputs } from "./formSource";
+import AdminHome from './pages/home/AdminHome';
+import List from './pages/list/List';
+import New from './pages/new/New';
+import Single from './pages/single/Single';
+
+
 function App() {
   const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
   
@@ -21,6 +29,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* USERS ROUTES */}
         <Route path="/" element={<Home user={user} setUser={setUser}/>} />
         <Route path="/products" element={<ProductList user={user}  setUser={setUser}/>} />
         <Route path="/products/:category" element={<ProductList user={user} setUser={setUser}/>} />
@@ -32,7 +41,23 @@ function App() {
         <Route path="/signup" element={(user ? <Navigate to='/'/> : <Signup/> )}/>
         <Route path="/profile" element={<Profile user={user} setUser={setUser}/> }/>
         <Route path="/orderDetails" element={<OrderDetails user={user} setUser={setUser}/> }/>
-       
+
+        {/* ADMIN ROUTES  */}
+        <Route path="/admin">
+        <Route index element={<AdminHome/>}/>
+        <Route path="users">
+          <Route index element={<List/>}/>
+          <Route path=":userId" element={<Single/>}/>
+          <Route path="new" element={<New inputs={userInputs} title="Add New User" />}/>
+        </Route>
+        <Route path="products">
+          <Route index element={<List/>}/>
+          <Route path=":productId" element={<Single/>}/>
+          <Route path="new" element={<New inputs={productInputs} title="Add New Product" />}/>
+        </Route>
+      </Route>
+
+
       </Routes>
     </BrowserRouter>
     
