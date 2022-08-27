@@ -7,6 +7,7 @@ import cartRoutes from './routes/cart.js';
 import orderRoutes from './routes/order.js';
 import productRoutes from './routes/product.js';
 import userRoutes from './routes/user.js';
+import widgetRoutes from './routes/widgetRoutes.js';
 const app = express();
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', orderRoutes);
+app.use('/admin/widget', widgetRoutes);
 // app.use('/seed', seedRoutes);
 
 

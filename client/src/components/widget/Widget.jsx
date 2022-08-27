@@ -1,15 +1,16 @@
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import Inventory2RoundedIcon from '@mui/icons-material/Inventory2Rounded';
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { Link } from 'react-router-dom';
 import "./widget.scss";
 
-const Widget = ({ type, details}) => {
+const Widget = ({ type, amount}) => {
   let data;
 
   //temporary
-  const amount = 100;
+  // const amount = 100;
   const diff = 20;
 
   switch (type) {
@@ -18,6 +19,7 @@ const Widget = ({ type, details}) => {
         title: "USERS",
         isMoney: false,
         link: "See all users",
+        linkurl : "/admin/users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -34,6 +36,7 @@ const Widget = ({ type, details}) => {
         title: "ORDERS",
         isMoney: false,
         link: "View all orders",
+        linkurl : "/admin/orders",
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -50,6 +53,7 @@ const Widget = ({ type, details}) => {
         title: "EARNINGS",
         isMoney: true,
         link: "View net earnings",
+        linkurl : "#",
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -58,13 +62,14 @@ const Widget = ({ type, details}) => {
         ),
       };
       break;
-    case "balance":
+    case "products":
       data = {
-        title: "BALANCE",
-        isMoney: true,
+        title: "PRODUCTS",
+        isMoney: false,
         link: "See details",
+        linkurl : "/admin/products",
         icon: (
-          <AccountBalanceWalletOutlinedIcon
+          <Inventory2RoundedIcon
             className="icon"
             style={{
               backgroundColor: "rgba(128, 0, 128, 0.2)",
@@ -85,7 +90,7 @@ const Widget = ({ type, details}) => {
         <span className="counter">
           {data.isMoney && "$"} {amount}
         </span>
-        <span className="link">{data.link}</span>
+        <Link to={data.linkurl} className="link">{data.link}</Link>
       </div>
       <div className="right">
         <div className="percentage positive">

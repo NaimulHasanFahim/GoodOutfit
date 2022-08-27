@@ -4,10 +4,21 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import StoreIcon from "@mui/icons-material/Store";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../redux/userRedux";
 import "./sidebar.scss";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = ()=>{
+    dispatch(logout());
+    navigate("/");
+
+  }
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -47,7 +58,7 @@ const Sidebar = () => {
           </Link>
           </li>
           <p className="title">USER</p>
-          <li>
+          <li onClick={handleLogout}>
             <ExitToAppIcon className='icon'/>
             <span>Logout</span>
           </li>
