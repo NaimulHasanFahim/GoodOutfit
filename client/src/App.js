@@ -18,6 +18,7 @@ import ProductsDatatable from "./components/datatable/ProductsDatatable";
 import UsersDatatable from "./components/datatable/UsersDatatable";
 import { productInputs, userInputs } from "./formSource";
 import AdminHome from './pages/home/AdminHome';
+import AddProduct from "./pages/new/AddNewProduct";
 import New from './pages/new/New';
 import Single from './pages/single/Single';
 
@@ -62,11 +63,12 @@ function App() {
         <Route path="/admin/products">
           <Route index element={(isAdmin ? <ProductsDatatable/>  : <Navigate to='/'/>)}/>
           <Route path=":productId" element={(isAdmin ? <Single/>  : <Navigate to='/'/>)}/>
-          <Route path="new" element={(isAdmin ? <New inputs={productInputs} title="Add New Product" />  : <Navigate to='/'/>)}/>
+          <Route path="new" element={(isAdmin ? <AddProduct inputs={productInputs} title="Add New Product" />  : <Navigate to='/'/>)}/>
         </Route>
         <Route path="/admin/orders">
           <Route index element={(isAdmin ?  <OrdersDatatable/> : <Navigate to='/'/>)}/>
-          <Route path=":ordersId" element={(isAdmin ? <Single/>  : <Navigate to='/'/>)}/>
+          <Route path="temp" element={(isAdmin ? <Single/>  : <Navigate to='/'/>)}/>
+          <Route path="new" element={(isAdmin ? <New inputs={userInputs} title="Add New Order" />  : <Navigate to='/'/>)}/>
          </Route>
       </Route>
 

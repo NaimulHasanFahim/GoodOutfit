@@ -100,7 +100,7 @@ const UsersDatatable = () => {
             <div className="datatable">
                 <div className="datatableTitle">
                     All Orders
-                    <Link to="/users/new" className="link">
+                    <Link to="/admin/orders/new" className="link">
                         Add New
                     </Link>
                 </div>

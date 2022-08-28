@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import List from "../../components/table/Table";
 import "./single.scss";
 
-const Single = () => {
+const SingleUser = () => {
   console.log("Inside the Single");
   return (
     <div className="single">
@@ -45,7 +45,7 @@ const Single = () => {
           </div>
         </div>
         <div className="bottom">
-          <h1 className="title">Last Transactions</h1>
+          <h1 className="title">Last Orders</h1>
           <List />
         </div>
       </div>
@@ -53,4 +53,4 @@ const Single = () => {
   );
 };
 
-export default Single;
+export default SingleUser;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOrdersData, getProductsData, getUsersData, getWidgetData } from '../../actions/admin';
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
-import Table from "../../components/table/Table";
+import TableHome from "../../components/table/TableHome";
 import Widget from '../../components/widget/Widget';
 import "./home.scss";
 
@@ -47,7 +47,7 @@ const AdminHome = ({user}) => {
         </div>
         <div className="listContainer">
           <div className="listTitle">Latest Orders</div>
-          <Table orders={orders}/>
+          <TableHome orders={orders}/>
         </div>
         
       </div>

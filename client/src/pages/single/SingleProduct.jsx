@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import List from "../../components/table/Table";
 import "./single.scss";
 
-const Single = () => {
+const SingleProduct = () => {
   console.log("Inside the Single");
   return (
     <div className="single">
@@ -53,4 +53,4 @@ const Single = () => {
   );
 };
 
-export default Single;
+export default SingleProduct;
