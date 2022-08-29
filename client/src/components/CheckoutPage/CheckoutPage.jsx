@@ -60,15 +60,16 @@ const CheckoutPage = ({cart, currentUser}) =>{
     await _sleep(1000);
     const temp =JSON.stringify(values, null, 2);
     // (currentUser, cart, addressData, bankData)
+    // console.log();
     const addressData = {"address1" : values.address1, "city" : values.city};
-    const bankData ={"sender" : values.accountNumber,"transactionId" : "", "reciever" : "01621532529" , "password" : values.password, "amount" : 100};
+    const bankData ={"sender" : values.accountNumber,"transactionId" : "", "reciever" : "01521532529" , "password" : values.password, "amount" : cart.total};
     // console.log(bankData);
     // console.log(addressData);
     
     try{
       const ans = API.post('/transaction/payment', bankData);
       ans.then(function(result){
-        // console.log(result);
+        console.log(result);
         bankData.transactionId = result.data.Transaction_ID;
         dispatch(createOrder(currentUser, cart, addressData, bankData, setNewOrderId));
         dispatch(clearCart());

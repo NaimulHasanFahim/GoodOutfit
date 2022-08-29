@@ -27,19 +27,20 @@ export const sliderItems = [
       id: 1,
       img : "https://5.imimg.com/data5/TX/VF/MY-33407711/men-winter-wear-cloth-500x500.jpg",
       // img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "Winter Collection!",
+      title: "Womens Collections",
       cat: "women"
     },
     {
       id: 2,
       img: "https://static.fibre2fashion.com/MemberResources/LeadResources/1/2018/6/Buyer/18149228/Images/18149228_0_kids-sport-wear.jpg",
-      title: "Sports",
+      title: "Gents Collections",
       cat: "man"
     },
     {
       id: 3,
-      img : "https://gearmoose.com/wp-content/uploads/2019/09/Best-Lightweight-Jackets-For-Fall-1.jpg",// img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "LIGHT JACKETS",
+      img : `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_IvmMTJ-YxZf9-qGLiX2jnsE0v5NzJgGsFFIXvbQmJA&s`,
+      // img : "https://gearmoose.com/wp-content/uploads/2019/09/Best-Lightweight-Jackets-For-Fall-1.jpg",// img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      title: "Child Collections",
       cat: "child"
     },
   ];

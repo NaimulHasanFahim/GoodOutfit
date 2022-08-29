@@ -16,18 +16,19 @@ import Signup from "./pages/Signup";
 import OrdersDatatable from "./components/datatable/OrdersDatatable";
 import ProductsDatatable from "./components/datatable/ProductsDatatable";
 import UsersDatatable from "./components/datatable/UsersDatatable";
-import { productInputs, userInputs } from "./formSource";
+import { userInputs } from "./formSource";
 import AdminHome from './pages/home/AdminHome';
 import AddProduct from "./pages/new/AddNewProduct";
 import New from './pages/new/New';
-import Single from './pages/single/Single';
-
-
+import SingleOrder from './pages/single/SingleOrder';
+import SingleProduct from './pages/single/SingleProduct';
+import SingleUser from './pages/single/SingleUser';
 function App() {
   
   const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
-  
-  const cart = useSelector((state) => state.cart);
+  const [data, setData] = useState(useSelector(state=>state.admin.productsDetails));
+  console.log(data);
+  // const cart = useSelector((state) => state.cart);
   let isAdmin = false;
   
   if(user!=null){
@@ -57,21 +58,20 @@ function App() {
         <Route index element={(isAdmin ? <AdminHome user={user}/> : <Navigate to='/'/> )}/>
         <Route path="/admin/users">
           <Route index element={(isAdmin ? <UsersDatatable/> : <Navigate to='/'/>)}/>
-          <Route path=":userId" element={(isAdmin ? <Single/>  : <Navigate to='/'/>)}/>
+          <Route path=":userId" element={(isAdmin ? <SingleUser/>  : <Navigate to='/'/>)}/>
           <Route path="new" element={(isAdmin ? <New inputs={userInputs} title="Add New User" />  : <Navigate to='/'/>)}/>
         </Route>
         <Route path="/admin/products">
-          <Route index element={(isAdmin ? <ProductsDatatable/>  : <Navigate to='/'/>)}/>
-          <Route path=":productId" element={(isAdmin ? <Single/>  : <Navigate to='/'/>)}/>
-          <Route path="new" element={(isAdmin ? <AddProduct inputs={productInputs} title="Add New Product" />  : <Navigate to='/'/>)}/>
+          <Route index element={(isAdmin ? <ProductsDatatable data={data} setData={setData}/>  : <Navigate to='/'/>)}/>
+          <Route path=":productId" element={(isAdmin ? <SingleProduct/>  : <Navigate to='/'/>)}/>
+          <Route path="new" element={(isAdmin ? <AddProduct />  : <Navigate to='/'/>)}/>
         </Route>
         <Route path="/admin/orders">
           <Route index element={(isAdmin ?  <OrdersDatatable/> : <Navigate to='/'/>)}/>
-          <Route path="temp" element={(isAdmin ? <Single/>  : <Navigate to='/'/>)}/>
+          <Route path=":orderId" element={(isAdmin ? <SingleOrder/>  : <Navigate to='/'/>)}/>
           <Route path="new" element={(isAdmin ? <New inputs={userInputs} title="Add New Order" />  : <Navigate to='/'/>)}/>
          </Route>
       </Route>
-
 
       </Routes>
     </BrowserRouter>

@@ -6,7 +6,7 @@ const orderSchema = mongoose.Schema(
     products: [
       {
         productId: {
-          type: String,
+          type: mongoose.Types.ObjectId, ref: 'Product',
         },
         quantity: {
           type: Number,
@@ -17,7 +17,8 @@ const orderSchema = mongoose.Schema(
     amount: { type: Number, required: true },
     address: { type: Object, required: true },
     status: { type: String, default: "Pending" },
-    transactionId : {type : String, required: true}
+    transactionId : {type : String, required: true},
+    sellerTransactionId : {type : String, default: ""}
   },
   { timestamps: true }
 );

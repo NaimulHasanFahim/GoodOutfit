@@ -1,29 +1,74 @@
-
-import { useState } from "react";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { addProductFromSupp } from '../../actions/admin';
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./addnewproduct.scss";
 
-import axios from "axios";
-import { useEffect } from "react";
-const AddProduct = ({ inputs }) => {
-  const [file, setFile] = useState("");
+const AddProduct = () => {
   const [products, setProducts] = useState(null);
+  const dispatch = useDispatch();
+  const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
+ 
   
-  useEffect(()=>{
-    const getProducts = async () =>{
+
+  useEffect(() => {
+    const getProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:3006/api/product/showall");
+        const res = await axios.get(
+          "http://localhost:3006/api/product/showall"
+        );
         // console.log(res);
         setProducts(res.data?.result);
       } catch (error) {
-        console.log("Error in the API Call of Supplier show all products " + error.message) 
+        console.log(
+          "Error in the API Call of Supplier show all products " + error.message
+        );
       }
     };
     getProducts();
   }, []);
-  console.log(products)
+  // console.log(products);
+  
+  const handleStock = (temp)=>{
+    if(temp===true){
+      return "Yes";
+    }
+    else{
+      return "No"
+    }
+  }
+  const addProduct = (event)=>{
+    event.preventDefault();
+    console.log(event.target.id);
+    let selectedProduct = {};
+    products.map((prod)=>{if(prod._id===event.target.id){
+      selectedProduct=prod;
+    }})
+    // console.log(selectedProduct);
+    // const selectedProduct = {...temp};
 
+    const  {title, desc, img, supplierId, _id, inStock, color, size, categories, price } = selectedProduct;
+    const formData = {
+      title,
+      desc,
+      isAdmin : true,
+      img,
+      supplierId,
+      supplerProdId: _id,
+      categories,
+      size,
+      color,
+      inStock,
+      price
+    }
+    // console.log(formData);
+    dispatch(addProductFromSupp(formData, user.existingUser ));
+  }
+  
   return (
     <div className="new">
       <Sidebar />
@@ -32,35 +77,50 @@ const AddProduct = ({ inputs }) => {
         <div className="top">
           <h1>Add New Product</h1>
         </div>
-        <div className="bottom">
-          <div className="left">
-            <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-              }
-              alt=""
-            />
-          </div>
-          <div className="right">
-            <form>
-              <div className="formInput">
-                <label >
-                  Image
-                </label>
-              </div>
-
-              {inputs.map((input) => (
-                <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+        {products == null ? (
+          <div>
+          <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          >
+          <CircularProgress color="inherit" />
+        </Backdrop></div>
+        ) : ( products.map((product) => (
+          <div className="bottom">
+            <div className="left">
+              <img id="productImg"
+                src={product.img}
+                alt="Product_Image"
+              />
+            </div>
+            <div className="right">
+              <form id={product._id}>
+                <div className="formInput" >
+                    <label>Title</label>
+                    <h6>{product.title}</h6>
                 </div>
-              ))}
-              <button>Send</button>
-            </form>
+                <div className="formInput">
+                    <label>Description</label>
+                    <h6>{product.desc}</h6>
+                  </div>
+                  <div className="formInput" >
+                    <label>Category</label>
+                    <h6>{product.categories}</h6>
+                  </div>
+                  <div className="formInput">
+                    <label>Price</label>
+                    <h6>{product.price}</h6>
+                  </div>
+                  <div className="formInput">
+                    <label>In Stock</label>
+                    <h6>{handleStock(product.inStock)}</h6>
+                  </div>
+                <button id={product._id} onClick={addProduct}>ADD</button>
+              </form>
+            </div>
           </div>
-        </div>
+      )))}
+        
+        {/* repeat */}
       </div>
     </div>
   );

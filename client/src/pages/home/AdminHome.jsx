@@ -29,7 +29,7 @@ const AdminHome = ({user}) => {
     getAllData();
   }, []);
 
-  // console.log(orders);
+  console.log(orders);
   // console.log(widget);
   // console.log(users);
   // console.log(products);

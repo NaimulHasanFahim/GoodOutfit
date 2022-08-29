@@ -29,6 +29,7 @@ export const verifyTokenAndAuthorization = (req, res, next) => {
   });
 };
 export const verifyTokenAndAdmin = (req, res, next) => {
+  // console.log(req.body);
   const isAdmin = req.body.isAdmin;
   if (isAdmin) {
     next();

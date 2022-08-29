@@ -1,18 +1,55 @@
 import express from "express";
 import { verifyTokenAndAdmin } from "../middleware/middle.js";
-import Product from './../models/Product.js';
+import Product from "./../models/Product.js";
 const router = express.Router();
 
 //CREATE
 
-router.post("/", verifyTokenAndAdmin, async (req, res) => {
-  const newProduct = new Product(req.body);
-
+router.post("/add", verifyTokenAndAdmin, async (req, res) => {
+  const {
+    title,
+    desc,
+    img,
+    supplierId,
+    supplerProdId,
+    categories,
+    size,
+    color,
+    inStock,
+    price,
+  } = req.body;
   try {
+    const newProduct = new Product({
+      title,
+      desc,
+      img,
+      supplierId,
+      supplerProdId,
+      categories,
+      size,
+      color,
+      inStock,
+      price,
+    });
+    // console.log(newProduct);
+
     const savedProduct = await newProduct.save();
-    res.status(200).json(savedProduct);
+    // console.log(savedProduct);
+    return res.status(200).json(savedProduct);
   } catch (err) {
-    res.status(500).json(err);
+    console.log(err.message);
+    return res.status(500).json(err.message);
+  }
+});
+
+//DELETE
+router.post("/delete", verifyTokenAndAdmin, async (req, res) => {
+  console.log(req.body);
+  try {
+    await Product.findByIdAndDelete(req.body.productId);
+    return res.status(200).json("Product has been deleted...");
+  } catch (err) {
+    return res.status(500).json(err);
   }
 });
 
@@ -32,26 +69,17 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//DELETE
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json("Product has been deleted...");
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 //GET PRODUCT
 router.get("/find/:id", async (req, res) => {
-  console.log("Hello in the find single page");
+  console.log(req.params.id);
+  // console.log("Hello in the find single page");
   try {
     // console.log('Hi');
     const product = await Product.findById(req.params.id);
     console.log(product);
-    res.status(200).json(product);
+    return res.status(200).json(product);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 

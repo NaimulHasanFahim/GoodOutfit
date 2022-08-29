@@ -25,9 +25,9 @@ export const getOrdersDetailsByUserId = (userId) => userRequest.get(`/orders/fin
 export const getWidgetData = (userData)=> API.post('/admin/widget', userData);
 export const getProductsData = (userData)=> API.get('/products');
 export const getUsersData = (userData) => API.post('/users', userData);
-export const getOrdersData = (userData) => API.post('/orders/allorders', userData);
-
-
+export const getOrdersData = (userData) => API.get('/orders/allorders', userData);
+export const addProductFromSupp=(formData) => API.post('/products/add', formData);
+export const deleteProductById = (formData) => API.post('/products/delete', formData);
 
 
 // TEMPLATE API CALL 

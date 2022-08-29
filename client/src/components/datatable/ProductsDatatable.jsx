@@ -1,7 +1,9 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { deleteProductById } from "../../actions/admin";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./../../pages/list/list.scss";
@@ -43,21 +45,54 @@ const userColumns = [
 
 //temporary data
 
-const ProductsDatatable = () => {
-  const [data, setData] = useState(useSelector(state=>state.admin.productsDetails));
-  console.log(data);
-  
+const ProductsDatatable = ({data}) => {
+  const [products, setProducts] = useState(data);
+  const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
+  const navigate = useNavigate();
+  const [deleteHandle, setDeleteHandle] = useState(true);
+ 
+  const dispatch = useDispatch();
   let tempList = [];
+  // console.log(data1);
 
-  data.map((temp) => (
-    tempList.push({id: temp._id, title : temp.title, sellerpayment : temp.sellerpayment, price : temp.price, sellerID : "1", inStock : temp.inStock  })
+  products.map((temp) => (
+    tempList.push({id: temp._id, title : temp.title, sellerpayment : temp.sellerpayment, price : temp.price, sellerID : temp.supplierId, inStock : temp.inStock  })
   ));
   console.log(tempList);
-
+  console.log(products);
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    console.log(id);
+    const formData = { 
+      productId : id,
+      isAdmin : user.existingUser.isAdmin
+    };
+    dispatch(deleteProductById(formData, user.existingUser, setProducts));
+    tempList=[];
+    setDeleteHandle(!deleteHandle);
+    // setData()
+    window.location.reload();
+    // setData(data.filter((item) => item.id !== id)); 
   };
+  useEffect(()=>{
+    const getProducts = async () =>{
+      try {
+        const res = await axios.get("http://localhost:5000/products" );
+        // console.log(res);
+        setProducts(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProducts();
+  }, [deleteHandle]);
+
+  const handleView = (id) =>{
+    console.log(id);
+    navigate(`/admin/products/${id}`);
+
+  }
+
 
   const actionColumn = [
     {
@@ -67,9 +102,9 @@ const ProductsDatatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
+            {/* <Link to="/users/test" style={{ textDecoration: "none" }}> */}
+              <div className="viewButton" onClick={()=>handleView(params.row.id)}>View</div>
+            {/* </Link> */}
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
@@ -100,7 +135,6 @@ const ProductsDatatable = () => {
             columns={userColumns.concat(actionColumn)}
             pageSize={9}
             rowsPerPageOptions={[9]}
-            checkboxSelection
             />
             </div>
             </div>

@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./../../pages/list/list.scss";
@@ -55,7 +55,8 @@ const userColumns = [
 
 const UsersDatatable = () => {
   const [data, setData] = useState(useSelector(state=>state.admin.ordersDetails));
-  // console.log(data);
+  const navigate = useNavigate();
+  
   
   let tempList = [];
 
@@ -69,6 +70,13 @@ const UsersDatatable = () => {
     setData(data.filter((item) => item.id !== id));
   };
 
+  const handleView = (id) =>{
+    console.log(id);
+    navigate(`/admin/orders/${id}`);
+
+  }
+
+
   const actionColumn = [
     {
       field: "action",
@@ -77,9 +85,9 @@ const UsersDatatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
+            {/* <Link to="/users/test" style={{ textDecoration: "none" }}> */}
+            <div className="viewButton" onClick={()=>handleView(params.row.id)}>View</div>
+            {/* </Link> */}
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}

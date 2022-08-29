@@ -36,7 +36,7 @@ router.post("/", verifyToken, async (req, res) => {
   
   const {userId, products, amount, address, bankData} = req.body;
 
-  // console.log(req.body);
+  console.log(req.body);
   try {
     
     const newOrder = new Order({
@@ -46,7 +46,7 @@ router.post("/", verifyToken, async (req, res) => {
       amount,
       address,
     });
-    // console.log(newOrder);
+    console.log(newOrder);
     const result = await newOrder.save();
     console.log(result);  
     } catch (err) {
@@ -70,6 +70,21 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
+router.post("/:id", verifyTokenAndAdmin, async (req, res) => {
+  console.log(req.params.id);
+  try {
+    // let temp ="";
+    const temp = await Order.findById(req.params.id);
+    
+    console.log(temp);
+    return res.status(200).json(temp);
+  } catch (err) {
+    return res.status(500).json(err.message);
+  }
+});
+
+
+
 //DELETE
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
@@ -84,19 +99,68 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 router.get("/find/:userId", async (req, res) => {
   // console.log(req.params);
   try {
-    const orders = await Order.find({ userId: req.params.userId });
-    res.status(200).json(orders);
+    // const orders = await Order.find({ userId: req.params.userId });
+    // console.log(orders);
+    let temp="";
+    Order.find({userId: req.params.userId})
+      .populate("products.productId")
+      .exec(function (err, all_transaction) {
+        if (err){
+          console.log(err);
+        }
+        temp = all_transaction;
+        // console.log(temp);
+        return res.status(200).json(temp);
+      });
+
+    // return res.status(200).json(orders);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+router.get("/allorders", async (req, res) => {
+  // console.log(req.params);
+  try {
+    // const orders = await Order.find({ userId: req.params.userId });
+    // console.log(orders);
+    let temp="";
+    Order.find()
+      .populate("products.productId")
+      .exec(function (err, all_transaction) {
+        if (err){
+          console.log(err);
+        }
+        temp = all_transaction;
+        // console.log(temp);
+        return res.status(200).json(temp);
+      });
+
+    // return res.status(200).json(orders);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 // //GET ALL
 
-router.post("/allorders", verifyTokenAndAdmin, async (req, res) => {
+router.post("/allorders", async (req, res) => {
+  console.log("Inside all orders");
   try {
-    const orders = await Order.find();
-    res.status(200).json(orders);
+    let temp={};
+    const tt = await Order.find();
+    console.log(tt);
+    Order.find()
+      .populate("products.productId")
+      .exec(function (err, all_transaction) {
+        if (err){
+          // console.log(err);
+        }
+        temp = all_transaction;
+        // console.log(all_transaction);
+      });
+    return res.status(200).json(temp);
   } catch (err) {
     res.status(500).json(err);
   }
