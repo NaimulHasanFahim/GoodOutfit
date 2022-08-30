@@ -15,6 +15,7 @@ import Signup from "./pages/Signup";
 // ADMIN IMPORTS 
 import OrdersDatatable from "./components/datatable/OrdersDatatable";
 import ProductsDatatable from "./components/datatable/ProductsDatatable";
+import SupplierOrderDatatable from "./components/datatable/SupplerOrdersDatatable";
 import UsersDatatable from "./components/datatable/UsersDatatable";
 import { userInputs } from "./formSource";
 import AdminHome from './pages/home/AdminHome';
@@ -27,14 +28,14 @@ function App() {
   
   const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
   const [data, setData] = useState(useSelector(state=>state.admin.productsDetails));
-  console.log(data);
+  // console.log(data);
   // const cart = useSelector((state) => state.cart);
   let isAdmin = false;
   
   if(user!=null){
-    isAdmin = user.existingUser.isAdmin;
+    isAdmin = user?.isAdmin;
   }
-  console.log(isAdmin);
+  // console.log(isAdmin);
   
   
   return (
@@ -70,7 +71,12 @@ function App() {
           <Route index element={(isAdmin ?  <OrdersDatatable/> : <Navigate to='/'/>)}/>
           <Route path=":orderId" element={(isAdmin ? <SingleOrder/>  : <Navigate to='/'/>)}/>
           <Route path="new" element={(isAdmin ? <New inputs={userInputs} title="Add New Order" />  : <Navigate to='/'/>)}/>
-         </Route>
+        </Route>
+
+        <Route path="/admin/palacedorders">
+          <Route index element={(isAdmin ?  <SupplierOrderDatatable/> : <Navigate to='/'/>)}/>
+          <Route path=":orderId" element={(isAdmin ? <SingleOrder/>  : <Navigate to='/'/>)}/>
+        </Route>
       </Route>
 
       </Routes>

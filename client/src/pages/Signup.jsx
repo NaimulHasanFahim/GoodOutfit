@@ -66,8 +66,8 @@ const initialState = {
   password: "",
   confirmPassword: "",
   username: "",
-  bankid: "01521532529",
-  bankpass: "12345",
+  bankid: "",
+  bankpass: "",
 };
 
 const Signup = ({user, setUser}) => {

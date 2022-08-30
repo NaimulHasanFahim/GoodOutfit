@@ -7,11 +7,11 @@ import User from "../models/user.js";
 
 export const signin = async (req, res) => {
   const { email} = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   
   try {
     const existingUser = await User.findOne({ email });
-    // console.log(existingUser);
+    console.log(existingUser);
     if (!existingUser)
       return res
         .status(404)
@@ -35,10 +35,15 @@ export const signin = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "3d" }
     );
-    console.log(existingUser);
+    // console.log(existingUser);
     // const { username, email,  } = existingUser;
-    res.status(200).json({existingUser, token});
-    
+    if(existingUser){
+      const {_id,firstName,lastName,username,email,password,image,isAdmin,bankid} = existingUser;
+      res.status(200).json({_id,firstName,lastName,username,email,password,image,isAdmin,bankid, token});
+    }
+    else{
+      res.status(500).json({ message: "No user with this email!" });  
+    }
   } catch (error) {
     //   res.status(500).json(error);
     res.status(500).json({ message: "Something went wrong." });
@@ -48,6 +53,7 @@ export const signin = async (req, res) => {
 export const signup = async (req, res) => {
   const { firstName, lastName, username, email, password, confirmPassword, bankid, bankpass } =
     req.body;
+    // console.log(req.body);
   try {
     const existingUser = await User.findOne({ email });
 
@@ -67,6 +73,8 @@ export const signup = async (req, res) => {
       process.env.PASS_SECRET
     ).toString();
 
+
+
     const result = await User.create({
       firstName, 
       lastName,
@@ -79,8 +87,16 @@ export const signup = async (req, res) => {
     const token = jwt.sign({ email: result.email, id: result._id }, "test", {
       expiresIn: "1h",
     });
-    res.status(200).json({ result, token });
+    console.log(result);
+    try {
+      const {firstName, lastName, email, username, bankid, isAdmin, _id , image,bankpass} = result;    
+      return res.status(200).json({ firstName, lastName, email, username, bankid, isAdmin, _id , image,bankpass, token });
+    } catch (error) {
+      console.log(error.message);
+    }
+    
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong." });
+    console.log(error.message);
+    return res.status(500).json({ message: "Something went wrong." });
   }
 };

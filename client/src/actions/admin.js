@@ -70,7 +70,7 @@ export const addProductFromSupp = (formData, userData) => async(dispatch)=>{
     dispatch(startFetching());
     try {
         const resData = await api.addProductFromSupp(formData);
-        console.log(resData);
+        // console.log(resData);
         const { data } = await api.getUsersData(userData);
         dispatch(productDetailsfetchingSuccess(data));
     } catch (error) {

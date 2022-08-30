@@ -6,7 +6,7 @@ export const signin = (formData, navigate, setUser) => async (dispatch) => {
 
     try {
         const { data } = await api.signIn(formData);
-        // console.log(data);
+        console.log(data);
         navigate('/');
         dispatch(signinSuccess(data));
         window.location.reload();
@@ -23,7 +23,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
 
     try {
         const { data } = await api.signUp(formData);
-        console.log(data);
+        // console.log(data);
         dispatch(signupSuccess(data));
         
     } catch (error) {

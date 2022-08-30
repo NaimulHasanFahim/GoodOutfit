@@ -53,7 +53,7 @@ const userColumns = [
 
 //temporary data
 
-const UsersDatatable = () => {
+const OrdersDatatable = () => {
   const [data, setData] = useState(useSelector(state=>state.admin.ordersDetails));
   const navigate = useNavigate();
   
@@ -118,7 +118,14 @@ const UsersDatatable = () => {
             columns={userColumns.concat(actionColumn)}
             pageSize={9}
             rowsPerPageOptions={[9]}
-            checkboxSelection
+            sx={{
+              boxShadow: 2,
+              border: 2,
+              borderColor: 'teal',
+              '& .MuiDataGrid-cell:hover': {
+                color: 'teal',
+              },
+            }}
             />
             </div>
             </div>
@@ -126,4 +133,4 @@ const UsersDatatable = () => {
       );
 };
 
-export default UsersDatatable;
+export default OrdersDatatable;

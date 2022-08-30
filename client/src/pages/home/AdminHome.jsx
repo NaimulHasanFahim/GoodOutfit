@@ -20,10 +20,10 @@ const AdminHome = ({user}) => {
   useEffect(() => {
     
     const getAllData = (  )=>{
-      dispatch(getWidgetData(user.existingUser, setWidget));
-      dispatch(getOrdersData(user.existingUser, setOrders));
-      dispatch(getProductsData(user.existingUser, setProducts));
-      dispatch(getUsersData(user.existingUser, setUsers));
+      dispatch(getWidgetData(user, setWidget));
+      dispatch(getOrdersData(user, setOrders));
+      dispatch(getProductsData(user, setProducts));
+      dispatch(getUsersData(user, setUsers));
     }
 
     getAllData();

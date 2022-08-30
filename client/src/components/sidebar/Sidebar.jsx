@@ -54,8 +54,15 @@ const Sidebar = () => {
           <li>
           <Link to="/admin/orders" style={{textDecoration:"none"}}>
             <CreditCardIcon className='icon'/>
-            <span>Orders</span>
+            <span>Users Orders</span>
           </Link>
+          </li>
+          <li>
+          <Link to="/admin/palacedorders" style={{textDecoration:"none"}}>
+            <CreditCardIcon className='icon'/>
+            <span>Supplier Orders</span>
+          </Link>
+          
           </li>
           <p className="title">USER</p>
           <li onClick={handleLogout}>
@@ -63,11 +70,6 @@ const Sidebar = () => {
             <span>Logout</span>
           </li>
         </ul>
-      </div>
-
-      <div className="bottom">
-        <div className="colorOption"></div>
-        <div className="colorOption"></div>
       </div>
     </div>
   );

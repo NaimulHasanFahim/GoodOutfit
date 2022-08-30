@@ -15,8 +15,8 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    bankid : { type: String, required: true },
-    bankpass :{ type: String, required: true }
+    bankid : { type: String },
+    bankpass :{ type: String }
   },
   { timestamps: true }
 );

@@ -12,13 +12,23 @@ const orderSchema = mongoose.Schema(
           type: Number,
           default: 1,
         },
+        delivery: {
+          type: String,
+          default: "Pending",
+        },
       },
     ],
     amount: { type: Number, required: true },
     address: { type: Object, required: true },
     status: { type: String, default: "Pending" },
     transactionId : {type : String, required: true},
-    sellerTransactionId : {type : String, default: ""}
+    supplierTransactionId : [
+      {
+        productId : {type : String},
+        transactionId :{type : String}
+      }],
+    supplierPaid : {type: Boolean, default: false},
+    userTransactionVerified : {type: Boolean, default: false}
   },
   { timestamps: true }
 );

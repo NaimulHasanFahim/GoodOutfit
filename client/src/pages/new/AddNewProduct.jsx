@@ -51,6 +51,8 @@ const AddProduct = () => {
     // console.log(selectedProduct);
     // const selectedProduct = {...temp};
 
+    const supplierBankId = selectedProduct.supplierId.bankid;
+    
     const  {title, desc, img, supplierId, _id, inStock, color, size, categories, price } = selectedProduct;
     const formData = {
       title,
@@ -63,10 +65,11 @@ const AddProduct = () => {
       size,
       color,
       inStock,
-      price
+      price: price+10,
+      supplierBankId : supplierBankId
     }
     // console.log(formData);
-    dispatch(addProductFromSupp(formData, user.existingUser ));
+    dispatch(addProductFromSupp(formData, user ));
   }
   
   return (

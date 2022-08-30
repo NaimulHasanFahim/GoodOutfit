@@ -70,8 +70,9 @@ const CheckoutPage = ({cart, currentUser}) =>{
       const ans = API.post('/transaction/payment', bankData);
       ans.then(function(result){
         console.log(result);
-        bankData.transactionId = result.data.Transaction_ID;
-        dispatch(createOrder(currentUser, cart, addressData, bankData, setNewOrderId));
+        let transactionId = result.data.transactionId;
+        console.log(transactionId);
+        dispatch(createOrder(currentUser, cart, addressData, transactionId, setNewOrderId));
         dispatch(clearCart());
       })
       // console.log(ans);

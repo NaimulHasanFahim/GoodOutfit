@@ -26,7 +26,7 @@ export const seed = async (req, res) => {
         // let image = "https://www.burdastyle.com/pub/media/catalog/product/cache/7bd3727382ce0a860b68816435d76e26/107/BUS-PAT-BURTE-1320516/1170x1470_BS_2016_05_132_front.png";
         
         let item = new Product({title,desc,img,categories,size,color,price,inStock,sellerpayment});
-        console.log(item);
+        // console.log(item);
         try {
             await item.save();
             // res.status(201).json(newPostMessage);

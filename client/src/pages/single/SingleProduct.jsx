@@ -4,7 +4,7 @@ import List from "../../components/table/Table";
 import "./single.scss";
 
 const SingleProduct = () => {
-  console.log("Inside the Single");
+  
   return (
     <div className="single">
       <Sidebar />

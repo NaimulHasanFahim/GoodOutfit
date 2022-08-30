@@ -84,12 +84,13 @@ const Profile = ({user, setUser}) => {
   
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
+  console.log(user);
   
   useEffect(()=>{
     const getOrdersByUserId = async () =>{
       try {
-        const res = await api.getOrdersDetailsByUserId(user.existingUser._id);
-        console.log(res);
+        const res = await api.getOrdersDetailsByUserId(user._id);
+        // console.log(res);
         setOrders(res.data);
       } catch (error) {
         console.log(error);
@@ -97,7 +98,7 @@ const Profile = ({user, setUser}) => {
     };
     getOrdersByUserId();
   }, []);
-  console.log(orders);
+  // console.log(orders);
 
   const orderDetails = (event)=>{
     const temp = event.target.getAttribute('id');
@@ -114,10 +115,10 @@ const Profile = ({user, setUser}) => {
         <ProfileImg src="https://scontent.fdac24-2.fna.fbcdn.net/v/t1.6435-9/71498243_2445517379056677_7580054576594681856_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeHm29lt_iFRlH-gwq18T6POOXAAVnX4kKE5cABWdfiQoRklUVaWbOpPq63_j8iflwYZDAKcMXLoxLyF-IfH-ePk&_nc_ohc=yCjeUYBBAgQAX-w3nTe&_nc_ht=scontent.fdac24-2.fna&oh=00_AT-wrZ11npCW8eIxNKyx4FYfXIWePvasCjoDFJouAr2UKQ&oe=632CC9A2"/>
       <TextContainer>
       <h1>Profile Details</h1>
-          <PlainTextCont>First Name : {user.existingUser.firstName}</PlainTextCont>
-          <PlainTextCont>Last Name : {user.existingUser.lastName}</PlainTextCont>
-          <PlainTextCont>Bank Account Number : {user.existingUser.bankid}</PlainTextCont>
-          <PlainTextCont>Email : {user.existingUser.email}</PlainTextCont>  
+          <PlainTextCont>First Name : {user.firstName}</PlainTextCont>
+          <PlainTextCont>Last Name : {user.lastName}</PlainTextCont>
+          <PlainTextCont>Bank Account Number : {user.bankid}</PlainTextCont>
+          <PlainTextCont>Email : {user.email}</PlainTextCont>  
       </TextContainer>
       </Wrapper>
       <Line/>

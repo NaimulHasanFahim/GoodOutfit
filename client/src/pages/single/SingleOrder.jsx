@@ -8,6 +8,17 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./single.scss";
 
+import styled from "styled-components";
+
+const VerifyNow = styled.div`
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: teal;
+  border: 1px dotted teal;
+  cursor: pointer;
+  width: 20%;
+`;
+
 const SingleOrder = () => {
   // const params = new URLSearchParams(window.location.pathname);
   const orderId = useParams();
@@ -18,15 +29,19 @@ const SingleOrder = () => {
     useSelector((state) => state.user.currentUser)
   );
 
+  const [loading, setLoading] = useState(true);
+  const API = axios.create({ baseURL: "http://localhost:8000/api" });
+
   useEffect(() => {
     const getOrderById = async () => {
       try {
         const { data } = await axios.post(
           `http://localhost:5000/orders/${orderId.orderId}`,
-          { isAdmin: user.existingUser.isAdmin }
+          { isAdmin: user.isAdmin }
         );
-        console.log(data);
+        // console.log(data);
         setOrder(data);
+        setLoading(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -34,77 +49,218 @@ const SingleOrder = () => {
     getOrderById();
   }, [orderId]);
 
-  const payToSeller = (event)=>{
+  async function payToSellerAndPlaceOrder(event) {
+    event.preventDefault();
+    let supplerTransaction = [];
+    // console.log(event.target.id);
+    setLoading(true);
+    const prodList = order.products;
+    prodList.map(async (orderProd) => {
+      const { price, supplerProdId, supplierBankId, supplierId } =
+        orderProd.productId;
+      const quantity = orderProd.quantity;
+      const address = order.address;
+
+      const bankData = {
+        amount: price - 10,
+        sender: "01521532529",
+        reciever: supplierBankId,
+        password: "12345",
+      };
+
+      let bankApiCallResult = [];
+      try {
+        // API CALL TO BANK FOR PAYMENT
+        const { data } = await API.post(`/transaction/payment`, bankData);
+        bankApiCallResult = [...bankApiCallResult, data];
+        let transactionId = data.transactionId;
+        if (transactionId != null) {
+          supplerTransaction.push({productId : orderProd.productId,transactionId : transactionId})
+          
+          //API CALL TO PALACE ORDER TO SUPPLIER
+          try {
+            const { data } = await axios.post(
+              `http://localhost:3006/api/order/add`,
+              {
+                productId: supplerProdId,
+                supplierId: supplierId,
+                transactionId: transactionId,
+                address: address,
+                price: price,
+                quantity: quantity,
+                ecom_orderId: order._id,
+                status: "Pending",
+              }
+            );
+            // console.log(data);
+            if(data?.message === "Product creation successfull"){
+              const respo1 = axios.post(
+                `http://localhost:5000/orders/update/${orderId.orderId}`,
+                { isAdmin: user.isAdmin, updatedData : { supplierPaid : true } });
+                console.log(respo1);
+                window.location.reload();
+            }
+          } catch (error) {
+            console.log(
+              "Error inside the palace order to supplier " + error.message
+            );
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      // console.log(bankApiCallResult);
+    });
+    // console.log(supplerTransaction);
+    // try {
+    //   const res = axios.post(
+    //     `http://localhost:5000/orders/update/${orderId.orderId}`,
+    //     { isAdmin: user.isAdmin, updatedData : { supplierPaid : true, supplierTransactionId : supplerTransaction } });
+    //     console.log(res);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    setLoading(false);
+  }
+
+  async function verifyTransaction(event) {
     event.preventDefault();
     console.log(event.target.id);
-  };
+    setLoading(true);
+
+    try {
+      await API.get(`/transaction/verify/${event.target.id}`).then(function (result) {
+        console.log(result);
+        if (result?.data?.message === "verified") {
+          // console.log(userisAdmin);
+          const res = axios.post(
+            `http://localhost:5000/orders/update/${orderId.orderId}`,
+            { isAdmin: user.isAdmin, updatedData : { userTransactionVerified : true} }
+          );
+          // console.log(res);
+          window.location.reload();
+        }
+        setLoading(false);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="single">
       <Sidebar />
       <div className="singleContainer">
         <Navbar />
-        
-          {order == null ? (
-            <div>
-              <Backdrop
-                sx={{
-                  color: "#fff",
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-              >
-                <CircularProgress color="inherit" />
-              </Backdrop>
+        {loading === true ? (
+          <div>
+            <div>Processing Request</div>
+            <div className="loader-container">
+              <div className="spinner"></div>
             </div>
-          ) : (
-            <div className="top">
-            <div className="left">
-              <h1 className="title">User Id : {order.userId}</h1>
-              <div className="item">
-                <div className="details">
-                  <h1 className="itemTitle">Order ID : {order._id}</h1>
-                  <div className="detailItem">
-                    <span className="itemKey">Transaction ID : </span>
-                    <span className="itemValue">{order.transactionId}</span>
+          </div>
+        ) : (
+          <div>
+            {order == null ? (
+              <div>
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                >
+                  <CircularProgress color="inherit" />
+                </Backdrop>
+              </div>
+            ) : (
+              <div className="top">
+                <div className="left">
+                  <h1 className="title">User Id : {order.userId}</h1>
+                  <div className="item">
+                    <div className="details">
+                      <h1 className="itemTitle">Order ID : {order._id}</h1>
+                      <div className="detailItem">
+                        <span className="itemKey">Transaction ID : </span>
+                        <span className="itemValue">{order.transactionId}</span>
+                        {order.userTransactionVerified === true ? (
+                          <img
+                            style={{ marginLeft: "5px" }}
+                            src="https://img.icons8.com/ios-filled/16/000000/approval.png"
+                            alt="verfied"
+                          />
+                        ) : (
+                          <VerifyNow
+                            id={order.transactionId}
+                            onClick={verifyTransaction}
+                          >
+                            Verify Now
+                          </VerifyNow>
+                        )}
+                      </div>
+                      <div className="detailItem">
+                        <span className="itemKey">Amount : </span>
+                        <span className="itemValue"> {order.amount}</span>
+                      </div>
+                      <div className="detailItem">
+                        <span className="itemKey">Phone:</span>
+                        <span className="itemValue">+1 2345 67 89</span>
+                      </div>
+                      <div className="detailItem">
+                        <span className="itemKey">Address:</span>
+                        <span className="itemValue">{order.address}</span>
+                      </div>
+                      <div className="detailItem">
+                        <span className="itemKey">Status : </span>
+                        <span className="itemValue">{order.status}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="detailItem">
-                    <span className="itemKey">Amount : </span>
-                    <span className="itemValue"> {order.amount}</span>
-                  </div>
-                  <div className="detailItem">
-                    <span className="itemKey">Phone:</span>
-                    <span className="itemValue">+1 2345 67 89</span>
-                  </div>
-                  <div className="detailItem">
-                    <span className="itemKey">Address:</span>
-                    <span className="itemValue">{order.address}</span>
-                  </div>
-                  <div className="detailItem">
-                    <span className="itemKey">Status : </span>
-                    <span className="itemValue">{order.status}</span>
+                  {order.supplierPaid === true ? (
+                    <button id={order._id} disabled>
+                      PAID TO SUPPLIER
+                    </button>
+                  ) : (
+                    <button id={order._id} onClick={payToSellerAndPlaceOrder}>
+                      Pay to Supplier
+                    </button>
+                  )}
+                </div>
+                <div className="right">
+                  <div className="item">
+                    <div className="details">
+                      <h1 className="itemTitle">Products</h1>
+                      {order.products.map((temp) => (
+                        <div className="detailItem" key={temp.productId._id}>
+                          <div>
+                            <span className="itemKey">Product ID : </span>
+                            <span className="itemValue">
+                              {temp.productId._id}{" "}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="itemKey">Product Title :</span>
+                            <span className="itemValue">
+                              {temp.productId.title}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="itemKey">Quantity :</span>
+                            <span className="itemVaule">{temp.quantity}</span>
+                          </div>
+                          <div>
+                            <span className="itemKey">Delivery Status:</span>
+                            <span className="itemVaule">{temp.delivery}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-              <button id={order._id} onClick={payToSeller}>Pay to Seller</button>
-            </div>
-            <div className="right">
-              <div className="item">
-                <div className="details">
-                  <h1 className="itemTitle">Products</h1>
-                  {order.products.map((temp)=>(
-                    <div className="detailItem" key={temp.id}>
-                      <span className="itemValue">Product ID : {temp.productId} <br/></span>
-                      <span className="itemKey">Quantity : {temp.quantity}</span>
-                  </div>
-                  ))}
-                  
-                </div>
-              </div>
-            </div>
-            </div>
-            
-          )}
-        
+            )}
+          </div>
+        )}
 
         {/* <div className="bottom">
           <h1 className="title">Last Transactions</h1>

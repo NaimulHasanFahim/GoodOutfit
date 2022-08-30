@@ -34,13 +34,13 @@ const router = express.Router();
 
 router.post("/", verifyToken, async (req, res) => {
   
-  const {userId, products, amount, address, bankData} = req.body;
-
+  const {userId, products, amount, address, transactionId} = req.body;
+  console.log("Inside the body of add order");  
   console.log(req.body);
   try {
     
     const newOrder = new Order({
-      transactionId: bankData.transactionId,
+      transactionId: transactionId,
       userId,
       products,
       amount,
@@ -55,12 +55,13 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.post("/update/:id", verifyTokenAndAdmin, async (req, res) => {
+  const updatedData = req.body.updatedData;
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body,
+        $set: updatedData,
       },
       { new: true }
     );
@@ -74,12 +75,24 @@ router.post("/:id", verifyTokenAndAdmin, async (req, res) => {
   console.log(req.params.id);
   try {
     // let temp ="";
-    const temp = await Order.findById(req.params.id);
+    const temp = await Order.findById(req.params.id).populate('products.productId');
     
     console.log(temp);
     return res.status(200).json(temp);
   } catch (err) {
     return res.status(500).json(err.message);
+  }
+});
+
+//UPDATE USER TRANSACTION ID VERIFICATION
+router.post("/verify/usertransaction/:id", verifyTokenAndAdmin, async (req, res) => {
+  // console.log(req.params.id);
+  const { id } = req.params;
+  try {
+    await Order.findByIdAndUpdate(id, { userTransactionVerified: true }, { new: true }); 
+    return res.status(200).send("Update Successfull");
+  } catch (error) {
+    res.status(500).json(error.message);
   }
 });
 

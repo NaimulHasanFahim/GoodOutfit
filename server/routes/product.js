@@ -17,6 +17,7 @@ router.post("/add", verifyTokenAndAdmin, async (req, res) => {
     color,
     inStock,
     price,
+    supplierBankId
   } = req.body;
   try {
     const newProduct = new Product({
@@ -25,6 +26,7 @@ router.post("/add", verifyTokenAndAdmin, async (req, res) => {
       img,
       supplierId,
       supplerProdId,
+      supplierBankId,
       categories,
       size,
       color,

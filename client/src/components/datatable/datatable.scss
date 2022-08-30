@@ -64,8 +64,8 @@
         .viewButton {
             padding: 2px 5px;
             border-radius: 5px;
-            color: darkblue;
-            border: 1px dotted rgba(0, 0, 139, 0.596);
+            color: teal;
+            border: 1px dotted teal;
             cursor: pointer;
         }
 
@@ -76,5 +76,34 @@
             border: 1px dotted rgba(220, 20, 60, 0.6);
             cursor: pointer;
         }
+    }
+}
+
+.loader-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background: rgba(52, 52, 52, 0.2);
+    z-index: 1;
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    border: 8px solid;
+    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

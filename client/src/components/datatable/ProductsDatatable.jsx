@@ -56,7 +56,7 @@ const ProductsDatatable = ({data}) => {
   // console.log(data1);
 
   products.map((temp) => (
-    tempList.push({id: temp._id, title : temp.title, sellerpayment : temp.sellerpayment, price : temp.price, sellerID : temp.supplierId, inStock : temp.inStock  })
+    tempList.push({id: temp._id, title : temp.title, sellerpayment : temp.supplierBankId, price : temp.price, sellerID : temp.supplierId, inStock : temp.inStock  })
   ));
   console.log(tempList);
   console.log(products);
@@ -65,9 +65,9 @@ const ProductsDatatable = ({data}) => {
     console.log(id);
     const formData = { 
       productId : id,
-      isAdmin : user.existingUser.isAdmin
+      isAdmin : user.isAdmin
     };
-    dispatch(deleteProductById(formData, user.existingUser, setProducts));
+    dispatch(deleteProductById(formData, user, setProducts));
     tempList=[];
     setDeleteHandle(!deleteHandle);
     // setData()
@@ -92,6 +92,9 @@ const ProductsDatatable = ({data}) => {
     navigate(`/admin/products/${id}`);
 
   }
+
+
+  console.log(products);
 
 
   const actionColumn = [

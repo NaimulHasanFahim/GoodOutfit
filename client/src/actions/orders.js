@@ -6,8 +6,8 @@ const currentUser = user && JSON.parse(user).currentUser;
 const TOKEN = currentUser?.token;
 
 
-export const createOrder = (currentUser, cart, addressData, bankData, setNewOrderId) => async (dispatch) => {
-  const userId = currentUser.existingUser._id;  
+export const createOrder = (currentUser, cart, addressData, transactionId) => async (dispatch) => {
+  const userId = currentUser._id;  
   console.log(userId);
   try {
         const res = await api.makeOrder({
@@ -15,11 +15,11 @@ export const createOrder = (currentUser, cart, addressData, bankData, setNewOrde
             userId: userId,
             products: cart.products.map((item) => ({
               productId: item._id,
-              quantity: item._quantity,
+              quantity: item.quantity,
             })),
             amount: cart.total,
             address: `${addressData.address1}, ${addressData.city}` ,
-            bankData : bankData
+            transactionId : transactionId
           });
         console.log(res);
     } catch (error) {
@@ -30,7 +30,7 @@ export const createOrder = (currentUser, cart, addressData, bankData, setNewOrde
   
 export const getOrdersByUserId = (currentUser) => async (dispatch) => {
   // console.log(currentUser);
-  const userId = currentUser.existingUser._id;  
+  const userId = currentUser._id;  
   // console.log(userId);
   try {
         const res = await api.getOrdersDetailsByUserId(userId);

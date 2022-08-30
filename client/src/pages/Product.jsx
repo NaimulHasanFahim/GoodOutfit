@@ -1,8 +1,8 @@
 import { Add, Remove } from "@mui/icons-material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -107,11 +107,11 @@ const Amount = styled.span`
 const Button = styled.button`
   padding: 15px;
   border: 2px solid teal;
-  background-color: white;
+  background-color: teal;
   cursor: pointer;
   font-weight: 500;
   &:hover {
-    background-color: #f8f4f4;
+    background-color: #4cb6b6;
   }
 `;
 
@@ -126,6 +126,7 @@ const Product = ({user, setUser}) => {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   
+  const [cart, setCart] = useState(useSelector((state) => state.cart));
 
   // console.log(product);
   useEffect(()=>{
@@ -148,12 +149,24 @@ const Product = ({user, setUser}) => {
       setQuantity(quantity + 1);
     }
   };
-
-  const handleClick = () => {
-    // console.log(product);
-    dispatch(
-      addProduct({...product, quantity, color, size })
-    );
+  const handleClick = (event) => {
+    // console.log(event.target.id);
+    // console.log(cart);
+    const temp1 = cart.products;
+    let yes =true;
+    for( const i in temp1){
+      console.log(temp1[i]._id);  
+      if(temp1[i]._id== event.target.id){
+        console.log("Product Already Exist inside the Cart");
+        yes=false;
+        return;
+      }
+    }
+    if(yes){
+      dispatch( addProduct({...product, quantity, color, size }));
+      // window.location.reload();
+    }
+    
   };
 
   return (
@@ -199,7 +212,7 @@ const Product = ({user, setUser}) => {
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("inc")}  />
             </AmountContainer>
-            <Button  onClick={handleClick}>ADD TO CART</Button>
+            {user == null ? (<Link to="/signup"><Button  id={product._id} >SIGN UP TO PALACE ORDER </Button></Link>) : (<Button  id={product._id} onClick={handleClick}>ADD TO CART </Button>)}
           </AddContainer>
         </InfoContainer>
       </Wrapper>

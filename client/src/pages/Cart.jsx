@@ -1,11 +1,12 @@
 import { Add, Remove } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-
+import { clearCart } from './../redux/cartRedux';
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -147,17 +148,56 @@ const Button = styled.button`
 `;
 
 const Cart = ({user, setUser}) => {
-  const cart = useSelector((state) => state.cart);
+  const [cart, setCart] = useState(useSelector((state) => state.cart));
+  const dispatch = useDispatch();
+  let countKey =0;
 
-  const handleQuantity = (type) => {
+  const handleQuantity = (type, id) => {
     if (type === "dec") {
-      console.log("Decreasing");
-      // quantity > 1 && product.quantity--;
+      console.log("Decreasing " + id);
+      const productMatched = cart.products.filter((i)=>(i._id === id));
+      const productRemain = cart.products.filter((i)=>(i._id !== id));
+
+      let productMatchedList = [];
+      let productRemainList = [];
+
+      for(const prod in productMatched){
+        productMatchedList.push(productMatched[prod]);
+      }
+
+      for(const i in productRemain){
+        productRemainList.push(productRemain[i]);
+      }
+
+      if(productMatchedList !== [] && productMatchedList[0].quantity>1){
+        productMatchedList[0].quantity -=1;
+        productRemainList.push(productMatchedList[0]);
+        // console.log(productRemain);
+       // dispatch(decreaseCartItemById(productRemainList));
+      }
+      else{
+        // dispatch(decreaseCartItemById([]));
+      } 
+      //window.location.reload();      
     } else {
-      // product.quantity--
-      console.log("Increasing");
+      console.log("Increasing " + id);
+      let productMatched = cart.products.filter((i)=>(i._id === id));
+      let productRemain = cart.products.filter((i)=>(i._id !== id));
+      let payload =[]; 
+      if(productMatched !== [] ){
+        productMatched[0].quantity +=1;
+        payload.push(productMatched[0]);
+        productRemain.map((i)=>payload.push(i));
+        console.log(payload);
+        //dispatch(increaseCartItemById(payload));
+      }
     }
   };
+
+  const handleClearCart = ()=>{
+    dispatch(clearCart());
+    window.location.reload();
+  }
 
   return (
     <Container>
@@ -173,9 +213,7 @@ const Cart = ({user, setUser}) => {
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <Link to="/checkout">
-            <TopButton type="filled">CHECKOUT NOW</TopButton>
-          </Link>
+            <TopButton type="filled" onClick={handleClearCart}>CLEAR CART</TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -200,12 +238,12 @@ const Cart = ({user, setUser}) => {
                   <ProductAmountContainer>
                     <Add
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleQuantity("inc")}
+                      onClick={() => handleQuantity("inc", product._id)}
                     />
                     <ProductAmount>{product.quantity}</ProductAmount>
                     <Remove
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleQuantity("dec", product)}
+                      onClick={() => handleQuantity("dec", product._id)}
                     />
                   </ProductAmountContainer>
                   <ProductPrice>$ {product.price}</ProductPrice>

@@ -11,7 +11,8 @@ const productSchema = mongoose.Schema(
     price: { type: Number, required: true },
     inStock: { type: Boolean, default: true },
     supplierId: {type: String,  required: true},
-    supplerProdId: {type: String,  required: true}
+    supplerProdId: {type: String,  required: true},
+    supplierBankId : {type: String,  required: true}
   },
   { timestamps: true }
 );

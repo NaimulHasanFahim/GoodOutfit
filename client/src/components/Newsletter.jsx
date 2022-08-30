@@ -25,6 +25,7 @@ const InputContainer = styled.div`
   height: 40px;
   background-color: white;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   border: 1px solid lightgray;
 `;
@@ -40,6 +41,7 @@ const Button = styled.button`
   border: none;
   background-color: teal;
   color: white;
+  margin-top: -1px;
 `;
 
 const Newsletter = () => {
