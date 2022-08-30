@@ -33,7 +33,7 @@ client/
    package.json
 server/
    package.json
-   .env (need to create your own .env for run this project see below for instructions)
+   .env (Need to create your own .env for run this project see below for instructions)
 ...
 ```
 
@@ -44,7 +44,7 @@ server/
 - [Node](https://nodejs.org/en/download/) ^10.0.0
 - [npm](https://nodejs.org/en/download/package-manager/)
 
-notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
+Note that you need client and server runs concurrently in different terminal session, in order to make them talk to each other. This project is totally modular so you can run the client or server side code after extracting the downloaded folder.
 
 ## Client-side usage(PORT: 3001)
 ```terminal
@@ -57,7 +57,7 @@ $ npm start // run it locally
 ## Server-side usage(PORT: 5000)
 
 ### Prepare your secret
-
+```
 (You need to add .env File to run the Server side API code)
 .env File Structure
 PORT = 5000
@@ -98,7 +98,7 @@ styled-components : ^5.3.5 |
 ## BUGs or comments
 [Create new Issues](https://github.com/NaimulHasanFahim/webproject/issues) (preferred)
 
-Email Me: mohammadfahimshah@gmail.com (welcome, say hi)
+Email Me: mohammadfahimshah@gmail.com
 
 ## Author
 [Naimul Hasan](https://www.linkedin.com/in/naimul-hasan-fahim-1541481b2/)
