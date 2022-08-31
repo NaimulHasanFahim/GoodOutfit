@@ -36,7 +36,7 @@ router.post("/", verifyToken, async (req, res) => {
   
   const {userId, products, amount, address, transactionId} = req.body;
   console.log("Inside the body of add order");  
-  console.log(req.body);
+  // console.log(req.body);
   try {
     
     const newOrder = new Order({
@@ -46,10 +46,62 @@ router.post("/", verifyToken, async (req, res) => {
       amount,
       address,
     });
-    console.log(newOrder);
+    // console.log(newOrder);
     const result = await newOrder.save();
-    console.log(result);  
+    // console.log(result);  
     } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// const {ecom_orderId, status, productId} = req.body;
+//   console.log(req.body);
+//   try {
+//     const doc = await Order.find({_id : ecom_orderId, "products.productId" : productId});
+//     console.log(doc);
+
+//     doc.products.map((temp)=>{
+//       console.log(temp);
+//       if(temp.productId == productId){
+//         temp.status = status;
+//       }
+//     });
+
+//     console.log(doc);
+//     await doc.save();
+//     return res.status(200).json(doc);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+
+router.post("/update/delivery", verifyTokenAndAdmin, async (req, res) => {
+  const {ecom_orderId, status, productId} = req.body;
+  // console.log(status);
+  try{
+    const updatedOrder = await Order.findOne({_id : ecom_orderId, "products.productId" : productId});
+    console.log(updatedOrder);
+    // updatedOrder.map((single)=>{
+    //   single.products.map((temp)=>{
+    //     // console.log(temp);
+    //     if(temp.productIdStr == productId){
+    //       temp.delivery = status;
+    //       console.log(temp.delivery);
+    //       // console.log(temp);
+    //   }});
+    // })
+
+    updatedOrder.products.map((temp)=>{
+      // console.log(temp);
+      if(temp.productIdStr == productId){
+        temp.delivery = status;
+        console.log(temp.delivery);
+        // console.log(temp);
+    }});
+    // console.log(updatedOrder[0]);    
+    const newOr = await updatedOrder.save();
+    // console.log(newOr);
+    return res.status(200).json(updatedOrder[0]);
+  } catch (err) {
     res.status(500).json(err);
   }
 });
@@ -57,6 +109,7 @@ router.post("/", verifyToken, async (req, res) => {
 //UPDATE
 router.post("/update/:id", verifyTokenAndAdmin, async (req, res) => {
   const updatedData = req.body.updatedData;
+  console.log(updatedData);
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,

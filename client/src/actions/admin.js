@@ -44,7 +44,7 @@ export const getUsersData = (userData) => async (dispatch, setUsers)=>{
 export const getOrdersData = (userData, setOrders) => async (dispatch)=>{
     dispatch(startFetching());
     try {
-        console.log(userData);
+        // console.log(userData);
         const { data } = await api.getOrdersData(userData);
         setOrders(data);
         dispatch(ordersDetailsfetchingSuccess(data));

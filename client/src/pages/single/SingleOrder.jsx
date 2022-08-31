@@ -28,6 +28,7 @@ const SingleOrder = () => {
   const [user, setUser] = useState(
     useSelector((state) => state.user.currentUser)
   );
+  const [called, setCalled] = useState(0);
 
   const [loading, setLoading] = useState(true);
   const API = axios.create({ baseURL: "http://localhost:8000/api" });
@@ -47,7 +48,31 @@ const SingleOrder = () => {
       }
     };
     getOrderById();
+    // checkDelivery();
   }, [orderId]);
+
+  const checkDelivery = () =>{
+    setCalled(true);
+    let countProd =0;
+    let countDelivery =0;
+    order.products.map((temp) =>{ 
+      countProd ++;
+      if(temp.delivery === "Approved"){
+        countDelivery++;
+      }})
+
+      if(countDelivery === countProd){
+        console.log(countDelivery + "  del -- prod   " + countProd);
+        try {
+          const respo1 = axios.post( `http://localhost:5000/orders/update/${orderId.orderId}`,
+            { isAdmin: user.isAdmin, updatedData : { status : "Shipped" } });
+            console.log(respo1);
+            window.location.reload();
+        } catch (error) {
+          
+        }
+      }
+  }
 
   async function payToSellerAndPlaceOrder(event) {
     event.preventDefault();
@@ -56,10 +81,11 @@ const SingleOrder = () => {
     setLoading(true);
     const prodList = order.products;
     prodList.map(async (orderProd) => {
-      const { price, supplerProdId, supplierBankId, supplierId } =
+      const { price, supplerProdId, supplierBankId, supplierId, _id } =
         orderProd.productId;
       const quantity = orderProd.quantity;
       const address = order.address;
+      // console.log(orderProd);
 
       const bankData = {
         amount: price - 10,
@@ -75,7 +101,8 @@ const SingleOrder = () => {
         bankApiCallResult = [...bankApiCallResult, data];
         let transactionId = data.transactionId;
         if (transactionId != null) {
-          supplerTransaction.push({productId : orderProd.productId,transactionId : transactionId})
+          console.log(orderProd.productId._id);
+          supplerTransaction.push({productId : _id,transactionId : transactionId})
           
           //API CALL TO PALACE ORDER TO SUPPLIER
           try {
@@ -90,9 +117,10 @@ const SingleOrder = () => {
                 quantity: quantity,
                 ecom_orderId: order._id,
                 status: "Pending",
+                ecom_prodId: orderProd.productId._id
               }
             );
-            // console.log(data);
+            console.log(data);
             if(data?.message === "Product creation successfull"){
               const respo1 = axios.post(
                 `http://localhost:5000/orders/update/${orderId.orderId}`,
@@ -145,6 +173,13 @@ const SingleOrder = () => {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  if(order != null && order.status == "Pending"){
+    if( called == 0){
+      setCalled(10);
+      checkDelivery();
     }
   }
 

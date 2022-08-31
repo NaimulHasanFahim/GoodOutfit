@@ -16,6 +16,7 @@ export const createOrder = (currentUser, cart, addressData, transactionId) => as
             products: cart.products.map((item) => ({
               productId: item._id,
               quantity: item.quantity,
+              productIdStr: item._id,
             })),
             amount: cart.total,
             address: `${addressData.address1}, ${addressData.city}` ,

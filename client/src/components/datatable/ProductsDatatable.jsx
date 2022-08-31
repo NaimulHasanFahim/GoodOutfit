@@ -10,7 +10,7 @@ import "./../../pages/list/list.scss";
 import "./datatable.scss";
 
 const userColumns = [
-  { field: "id", headerName: "Product ID", width: 200 },
+  { field: "id", headerName: "Product ID", width: 250 },
   {
     field: "title",
     headerName: "Title",

@@ -25,7 +25,8 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img : "https://5.imimg.com/data5/TX/VF/MY-33407711/men-winter-wear-cloth-500x500.jpg",
+      img : "https://t4.ftcdn.net/jpg/03/13/65/17/240_F_313651795_OUrd7HrFYuxo9LXuuREFvRyIPeEfVSLj.jpg",
+      // img : "https://5.imimg.com/data5/TX/VF/MY-33407711/men-winter-wear-cloth-500x500.jpg",
       // img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       title: "Womens Collections",
       cat: "women"
@@ -38,7 +39,8 @@ export const sliderItems = [
     },
     {
       id: 3,
-      img : `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_IvmMTJ-YxZf9-qGLiX2jnsE0v5NzJgGsFFIXvbQmJA&s`,
+      img : "https://img.freepik.com/free-photo/full-length-portrait-cute-little-kid-girl-stylish-jeans-clothes-smiling-standing-white-kids-fashion-concept_155003-20300.jpg?w=996&t=st=1661912853~exp=1661913453~hmac=4bcf652cc81e93360cd9a9db439c01fef2bb1390ca26907d03df35d99bbaeee8",
+      // img : `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_IvmMTJ-YxZf9-qGLiX2jnsE0v5NzJgGsFFIXvbQmJA&s`,
       // img : "https://gearmoose.com/wp-content/uploads/2019/09/Best-Lightweight-Jackets-For-Fall-1.jpg",// img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       title: "Child Collections",
       cat: "child"

@@ -1,5 +1,6 @@
 <h1 align="center">
-E-Commerce Website For Web Project
+Chic Closet
+<p>An E-commerce website for Web Project</p>
 </h1>
 <p align="center">
 MongoDB, Expressjs, React, Redux, Nodejs

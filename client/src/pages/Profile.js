@@ -112,7 +112,7 @@ const Profile = ({user, setUser}) => {
     <Navbar user={user} setUser={setUser} />
     <Container>
       <Wrapper>
-        <ProfileImg src="https://scontent.fdac24-2.fna.fbcdn.net/v/t1.6435-9/71498243_2445517379056677_7580054576594681856_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeHm29lt_iFRlH-gwq18T6POOXAAVnX4kKE5cABWdfiQoRklUVaWbOpPq63_j8iflwYZDAKcMXLoxLyF-IfH-ePk&_nc_ohc=yCjeUYBBAgQAX-w3nTe&_nc_ht=scontent.fdac24-2.fna&oh=00_AT-wrZ11npCW8eIxNKyx4FYfXIWePvasCjoDFJouAr2UKQ&oe=632CC9A2"/>
+        <ProfileImg src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
       <TextContainer>
       <h1>Profile Details</h1>
           <PlainTextCont>First Name : {user.firstName}</PlainTextCont>
