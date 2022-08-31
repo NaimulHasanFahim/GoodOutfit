@@ -92,6 +92,22 @@ redux-persist : ^6.0.0| nodemon : ^2.0.16
 styled-components : ^5.3.5 |
 
 
+# Screenshots of this project
+
+User visit public and Home page
+![User visit public and Home page](https://user-images.githubusercontent.com/40023605/187589352-7e290dfe-f5a4-49ab-abf5-8698b22f2189.png)
+
+User can sign in or sign up
+![User can sign in or sign up](https://user-images.githubusercontent.com/40023605/187589358-93b1112e-bb3d-4d3f-bbde-16a6d4bd15b6.png)
+
+After signing in user can go to account route and make request to token-protected API endpoint
+![After signing in user can go to account route](https://user-images.githubusercontent.com/40023605/187589353-8c575245-e9fa-4d3b-9842-2d7d842057ec.png)
+
+Admin Panel Landing Page
+![Admin can control all the actions from here](https://user-images.githubusercontent.com/40023605/187589360-c25ee499-95e8-4fae-88be-6aa3d600f3b4.png)
+
+
+
 ## Standard
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
