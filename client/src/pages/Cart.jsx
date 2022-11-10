@@ -1,7 +1,7 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -150,6 +150,7 @@ const Button = styled.button`
 const Cart = ({user, setUser}) => {
   const [cart, setCart] = useState(useSelector((state) => state.cart));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let countKey =0;
 
   const handleQuantity = (type, id) => {
@@ -188,7 +189,7 @@ const Cart = ({user, setUser}) => {
         productMatched[0].quantity +=1;
         payload.push(productMatched[0]);
         productRemain.map((i)=>payload.push(i));
-        console.log(payload);
+        // console.log(payload);
         //dispatch(increaseCartItemById(payload));
       }
     }
@@ -196,7 +197,7 @@ const Cart = ({user, setUser}) => {
 
   const handleClearCart = ()=>{
     dispatch(clearCart());
-    window.location.reload();
+    navigate('/');
   }
 
   return (

@@ -1,31 +1,17 @@
 <h1 align="center">
-Chic Closet
-<p>An E-commerce website for Web Project</p>
+GoodOutfit
+<p>An E-commerce website for Web Project. This project is separated into two sections: user and admin. In the user section, users can view products in several categories and filter them by color and size. The user can also sort the products from newest to oldest or by price. Users can view product details, add to cart, place order, and track orders on the E-commerce website. To place an order, each user must first register and log in with their credentials. When a user place an order a bank’s payment gateway will appear prompting the user to enter information and a secret key in order to complete the transaction. When all of the requirements are met, the bank will produce a transaction id, and the funds will be transferred from the user’s bank account to the E-commerce bank account. Ecommerce frontend interact with two other api [LeatherWallet](https://github.com/NaimulHasanFahim/LeatherWallet) and a [Supplier backend API](https://github.com/NaimulHasanFahim/Suppliers). Whole workflow can be understand from this [pdf](https://github.com/NaimulHasanFahim/Goodwear/issues/2#issue-1443971165).</p>
 </h1>
 <p align="center">
 MongoDB, Expressjs, React, Redux, Nodejs
 </p>
 
-<p align="center">
-   <a href="https://travis-ci.com/amazingandyyy/mern">
-      <img src="https://travis-ci.com/amazingandyyy/mern.svg?branch=master" />
-   </a>
-   <a href="https://github.com/amazingandyyy/mern/blob/master/LICENSE">
-      <img src="https://img.shields.io/badge/License-MIT-green.svg" />
-   </a>
-   <a href="https://circleci.com/gh/amazingandyyy/mern">
-      <img src="https://circleci.com/gh/amazingandyyy/mern.svg?style=svg" />
-   </a>
-</p>
 
-> MERN is a fullstack implementation in MongoDB, Expressjs, React/Redux, Nodejs.
-
-MERN stack is the idea of using Javascript/Node for fullstack web development.
+> MERN is a fullstack implementation in MongoDB, Expressjs, React/Redux, Nodejs. The idea is to use Javascript/Node for fullstack web development.
 
 ## clone or download
 ```terminal
 $ git clone https://github.com/NaimulHasanFahim/webproject.git
-$ npm i
 ```
 
 ## project structure
@@ -38,7 +24,7 @@ server/
 ...
 ```
 
-# Usage (run fullstack app on your machine)
+# Usage (Run fullstack app on your machine.)
 
 ## Prerequisites
 - [MongoDB](https://gist.github.com/nrollr/9f523ae17ecdbb50311980503409aeb3)
@@ -107,10 +93,6 @@ Admin Panel Landing Page
 ![Admin can control all the actions from here](https://user-images.githubusercontent.com/40023605/187589360-c25ee499-95e8-4fae-88be-6aa3d600f3b4.png)
 
 
-
-## Standard
-
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
 ## BUGs or comments
 [Create new Issues](https://github.com/NaimulHasanFahim/webproject/issues) (preferred)

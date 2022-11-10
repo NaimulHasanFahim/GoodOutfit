@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteProductById } from "../../actions/admin";
+import { deleteProductById, getProductsData } from "../../actions/admin";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./../../pages/list/list.scss";
@@ -15,7 +15,7 @@ const userColumns = [
     field: "title",
     headerName: "Title",
     width: 200,
-   },
+  },
   {
     field: "price",
     headerName: "Price",
@@ -45,39 +45,62 @@ const userColumns = [
 
 //temporary data
 
-const ProductsDatatable = ({data}) => {
-  const [products, setProducts] = useState(data);
-  const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
+const ProductsDatatable = ({ data }) => {
+  const [products, setProducts] = useState(
+    useSelector((state) => state.admin.usersDetails)
+  );
+  const [user, setUser] = useState(
+    useSelector((state) => state.user.currentUser)
+  );
   const navigate = useNavigate();
   const [deleteHandle, setDeleteHandle] = useState(true);
- 
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAllData = () => {
+      dispatch(getProductsData(user, setProducts));
+      setLoading(false);
+    };
+
+    getAllData();
+  }, []);
+  console.log(products);
+
   let tempList = [];
   // console.log(data1);
 
-  products.map((temp) => (
-    tempList.push({id: temp._id, title : temp.title, sellerpayment : temp.supplierBankId, price : temp.price, sellerID : temp.supplierId, inStock : temp.inStock  })
-  ));
+  products.map((temp) =>
+    tempList.push({
+      id: temp._id,
+      title: temp.title,
+      sellerpayment: temp.supplierBankId,
+      price: temp.price,
+      sellerID: temp.supplierId,
+      inStock: temp.inStock,
+    })
+  );
   console.log(tempList);
   console.log(products);
 
   const handleDelete = (id) => {
     console.log(id);
-    const formData = { 
-      productId : id,
-      isAdmin : user.isAdmin
+    const formData = {
+      productId: id,
+      isAdmin: user.isAdmin,
     };
     dispatch(deleteProductById(formData, user, setProducts));
-    tempList=[];
+    tempList = [];
     setDeleteHandle(!deleteHandle);
     // setData()
     window.location.reload();
-    // setData(data.filter((item) => item.id !== id)); 
+    // setData(data.filter((item) => item.id !== id));
   };
-  useEffect(()=>{
-    const getProducts = async () =>{
+  useEffect(() => {
+    const getProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/products" );
+        const res = await axios.get("http://localhost:5000/products");
         // console.log(res);
         setProducts(res.data);
       } catch (error) {
@@ -87,15 +110,12 @@ const ProductsDatatable = ({data}) => {
     getProducts();
   }, [deleteHandle]);
 
-  const handleView = (id) =>{
+  const handleView = (id) => {
     console.log(id);
     navigate(`/admin/products/${id}`);
-
-  }
-
+  };
 
   console.log(products);
-
 
   const actionColumn = [
     {
@@ -106,7 +126,12 @@ const ProductsDatatable = ({data}) => {
         return (
           <div className="cellAction">
             {/* <Link to="/users/test" style={{ textDecoration: "none" }}> */}
-              <div className="viewButton" onClick={()=>handleView(params.row.id)}>View</div>
+            <div
+              className="viewButton"
+              onClick={() => handleView(params.row.id)}
+            >
+              View
+            </div>
             {/* </Link> */}
             <div
               className="deleteButton"
@@ -120,29 +145,46 @@ const ProductsDatatable = ({data}) => {
     },
   ];
 
-    return (
-        <div className="list">
-          <Sidebar />
-          <div className="listContainer">
-            <Navbar />
-            <div className="datatable">
-                <div className="datatableTitle">
-                    All Products
-                    <Link to="/admin/products/new" className="link">
-                        Add New
-                    </Link>
-                </div>
+  return (
+    <div className="list">
+      <Sidebar />
+      <div className="listContainer">
+        <Navbar />
+        {loading === true || products === null ? (
+          <div>
+            <div>Processing Request</div>
+            <div className="loader-container">
+              <div className="spinner"></div>
+            </div>
+          </div>
+        ) : (
+          <div className="datatable">
+            <div className="datatableTitle">
+              All Products
+              <Link to="/admin/products/new" className="link">
+                Add New
+              </Link>
+            </div>
             <DataGrid
-            className="datagrid"
-            rows={tempList}
-            columns={userColumns.concat(actionColumn)}
-            pageSize={9}
-            rowsPerPageOptions={[9]}
+              className="datagrid"
+              rows={tempList}
+              columns={userColumns.concat(actionColumn)}
+              pageSize={9}
+              rowsPerPageOptions={[9]}
+              sx={{
+                boxShadow: 2,
+                border: 2,
+                borderColor: "teal",
+                "& .MuiDataGrid-cell:hover": {
+                  color: "teal",
+                },
+              }}
             />
-            </div>
-            </div>
-        </div>
-      );
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ProductsDatatable;

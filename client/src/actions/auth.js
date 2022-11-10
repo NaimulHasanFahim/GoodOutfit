@@ -18,6 +18,22 @@ export const signin = (formData, navigate, setUser) => async (dispatch) => {
     }
 }
 
+export const updateBankData = (formData,id, navigate) => async (dispatch) => {
+    
+    try {
+        const { data } = await api.updateBankData(formData, id);
+        navigate('/');
+        dispatch(signinSuccess(data));
+        window.location.reload();
+        // setUser( useSelector(state=> state.user.currentuser));
+        
+    } catch (error) {
+        console.log(error)
+        dispatch(signinFailure());
+    }
+}
+
+
 export const signup = (formData, navigate) => async (dispatch) => {
     dispatch(signupStart());
 

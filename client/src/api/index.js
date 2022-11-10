@@ -20,6 +20,7 @@ export const signIn = (formData) => API.post('/auth/signin', formData);
 export const signUp = (formData) => API.post('/auth/signup', formData);
 export const makeOrder = (formData) => userRequest.post('/orders/', formData);
 export const getOrdersDetailsByUserId = (userId) => userRequest.get(`/orders/find/${userId}`);
+export const updateBankData = (formData, id) => API.post(`/users/${id}`, formData);
 
 //ADMIN API CALL
 export const getWidgetData = (userData)=> API.post('/admin/widget', userData);
@@ -28,6 +29,7 @@ export const getUsersData = (userData) => API.post('/users', userData);
 export const getOrdersData = (userData) => API.get('/orders/allorders', userData);
 export const addProductFromSupp=(formData) => API.post('/products/add', formData);
 export const deleteProductById = (formData) => API.post('/products/delete', formData);
+
 
 
 // TEMPLATE API CALL 

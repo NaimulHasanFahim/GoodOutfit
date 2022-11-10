@@ -35,7 +35,7 @@ export const sliderItems = [
       id: 2,
       img: "https://static.fibre2fashion.com/MemberResources/LeadResources/1/2018/6/Buyer/18149228/Images/18149228_0_kids-sport-wear.jpg",
       title: "Gents Collections",
-      cat: "man"
+      cat: "men"
     },
     {
       id: 3,

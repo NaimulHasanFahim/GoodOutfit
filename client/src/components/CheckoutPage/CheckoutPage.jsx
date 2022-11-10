@@ -25,14 +25,14 @@ const Container = styled.div`
 const steps = ['Shipping address', 'Payment details', 'Review your order', 'Success'];
 const { formId, formField } = checkoutFormModel;
 
-function _renderStepContent(step, cart) {
+function _renderStepContent(step, cart, bankid) {
   switch (step) {
     case 0:
       return <AddressForm formField={formField} />;
     case 1:
       return <PaymentForm formField={formField} />;
     case 2:
-      return <ReviewOrder cart={cart}/>;
+      return <ReviewOrder cart={cart} bankid={bankid}/>;
     case 3:
       return <CheckoutSuccess/>
     default:
@@ -51,6 +51,7 @@ const CheckoutPage = ({cart, currentUser}) =>{
   const isLastStep = activeStep === steps.length-2;
   const dispatch = useDispatch();
   const [ newOrderId,setNewOrderId] = useState(null);
+  const bankid = currentUser.bankid;
 
   function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -61,8 +62,9 @@ const CheckoutPage = ({cart, currentUser}) =>{
     const temp =JSON.stringify(values, null, 2);
     // (currentUser, cart, addressData, bankData)
     // console.log();
+    
     const addressData = {"address1" : values.address1, "city" : values.city};
-    const bankData ={"sender" : values.accountNumber,"transactionId" : "", "reciever" : "01521532529" , "password" : values.password, "amount" : cart.total};
+    const bankData ={"sender" : bankid,"transactionId" : "", "reciever" : "01521532529" , "password" : values.password, "amount" : cart.total};
     // console.log(bankData);
     // console.log(addressData);
     
@@ -120,7 +122,7 @@ const CheckoutPage = ({cart, currentUser}) =>{
           >
             {({ isSubmitting }) => (
               <Form id={formId}>
-                {_renderStepContent(activeStep, cart)}
+                {_renderStepContent(activeStep, cart, bankid)}
                 {/* Button portion */}
                 <div style={{display: 'flex',justifyContent: 'flex-end'}}>
                   {activeStep !== 0 && (

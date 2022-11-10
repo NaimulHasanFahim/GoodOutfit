@@ -9,7 +9,7 @@ import ShippingDetails from './ShippingDetails';
 const Container = styled.div``;
 
 
-const ReviewOrder = ({cart})=>{
+const ReviewOrder = ({cart, bankid})=>{
   const { values: formValues } = useFormikContext();
   // console.log(cart);
   return (
@@ -20,7 +20,7 @@ const ReviewOrder = ({cart})=>{
       <ProductDetails cart={cart}/>
       <Grid container spacing={2}>
         <ShippingDetails formValues={formValues} />
-        <PaymentDetails formValues={formValues} />
+        <PaymentDetails formValues={formValues} bankid={bankid} />
       </Grid>
     </Container>
   );

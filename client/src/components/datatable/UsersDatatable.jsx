@@ -1,7 +1,8 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { getUsersData } from "../../actions/admin";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./../../pages/list/list.scss";
@@ -50,27 +51,47 @@ const userColumns = [
 //temporary data
 
 const UsersDatatable = () => {
-  const [data, setData] = useState(useSelector(state=>state.admin.usersDetails));
   const navigate = useNavigate();
-  // console.log(data);
-  
+  const [user, setUser] = useState(
+    useSelector((state) => state.user.currentUser)
+  );
+  const [users, setUsers] = useState(
+    useSelector((state) => state.admin.usersDetails)
+  );
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAllData = () => {
+      dispatch(getUsersData(user, setUsers));
+      setLoading(false);
+    };
+
+    getAllData();
+  }, []);
+  console.log(users);
+
   let tempList = [];
 
-  data.map((temp) => (
-    tempList.push({id: temp._id, bankid : temp.bankid , username : temp.username, email : temp.email})
-  ));
+  users.map((temp) =>
+    tempList.push({
+      id: temp._id,
+      bankid: temp.bankid,
+      username: temp.username,
+      email: temp.email,
+    })
+  );
   console.log(tempList);
 
-
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    setUser(users.filter((item) => item.id !== id));
   };
 
-  const handleView = (id) =>{
+  const handleView = (id) => {
     console.log(id);
     navigate(`/admin/users/${id}`);
-
-  }
+  };
 
   const actionColumn = [
     {
@@ -80,7 +101,12 @@ const UsersDatatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-              <div className="viewButton" onClick={()=> handleView(params.row.id)}>View</div>
+            <div
+              className="viewButton"
+              onClick={() => handleView(params.row.id)}
+            >
+              View
+            </div>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
@@ -93,30 +119,46 @@ const UsersDatatable = () => {
     },
   ];
 
-    return (
-        <div className="list">
-          <Sidebar />
-          <div className="listContainer">
-            <Navbar />
-            <div className="datatable">
-                <div className="datatableTitle">
-                    All Users
-                    <Link to="/admin/users/new" className="link">
-                        Add New
-                    </Link>
-                </div>
+  return (
+    <div className="list">
+      <Sidebar />
+      <div className="listContainer">
+        <Navbar />
+        {loading === true || users === null ? (
+          <div>
+            <div>Processing Request</div>
+            <div className="loader-container">
+              <div className="spinner"></div>
+            </div>
+          </div>
+        ) : (
+          <div className="datatable">
+            <div className="datatableTitle">
+              All Users
+              <Link to="/admin/users/new" className="link">
+                Add New
+              </Link>
+            </div>
             <DataGrid
-            className="datagrid"
-            rows={tempList}
-            columns={userColumns.concat(actionColumn)}
-            pageSize={9}
-            rowsPerPageOptions={[9]}
-            checkboxSelection
+              className="datagrid"
+              rows={tempList}
+              columns={userColumns.concat(actionColumn)}
+              pageSize={9}
+              rowsPerPageOptions={[9]}
+              sx={{
+                boxShadow: 2,
+                border: 2,
+                borderColor: "teal",
+                "& .MuiDataGrid-cell:hover": {
+                  color: "teal",
+                },
+              }}
             />
-            </div>
-            </div>
-        </div>
-      );
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default UsersDatatable;

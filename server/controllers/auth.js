@@ -7,11 +7,11 @@ import User from "../models/user.js";
 
 export const signin = async (req, res) => {
   const { email} = req.body;
-  // console.log(req.body);
+  console.log(req.body);
   
   try {
     const existingUser = await User.findOne({ email });
-    console.log(existingUser);
+    // console.log(existingUser);
     if (!existingUser)
       return res
         .status(404)
@@ -35,7 +35,8 @@ export const signin = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "3d" }
     );
-    // console.log(existingUser);
+    console.log(token);
+    console.log(existingUser);
     // const { username, email,  } = existingUser;
     if(existingUser){
       const {_id,firstName,lastName,username,email,password,image,isAdmin,bankid} = existingUser;
@@ -67,11 +68,11 @@ export const signup = async (req, res) => {
       password,
       process.env.PASS_SECRET
     ).toString();
-    
-    const hashedBankid = cryptoJs.AES.encrypt(
-      bankpass,
-      process.env.PASS_SECRET
-    ).toString();
+    console.log(hashedPassword);
+    // const hashedBankid = cryptoJs.AES.encrypt(
+    //   bankpass,
+    //   process.env.PASS_SECRET
+    // ).toString();
 
 
 
@@ -82,7 +83,7 @@ export const signup = async (req, res) => {
       password: hashedPassword,
       username,
       bankid,
-      bankpass: hashedBankid,
+      bankpass,
     });
     const token = jwt.sign({ email: result.email, id: result._id }, "test", {
       expiresIn: "1h",

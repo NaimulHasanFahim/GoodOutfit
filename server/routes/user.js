@@ -1,29 +1,40 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middleware/middle.js";
 import User from "../models/user.js";
-
 const router = express.Router();
 
 //UPDATE
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
-  if (req.body.password) {
-    req.body.password = CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.PASS_SECRET
-    ).toString();
-  }
-
+router.post("/:id", async (req, res) => {
+  const {bankid, password} = req.body;
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body,
+        bankid : bankid,
+        bankpass : password
       },
       { new: true }
     );
-    res.status(200).json(updatedUser);
+    console.log(updatedUser);
+    const token = jwt.sign(
+      {
+        id: updatedUser._id,
+        isAdmin: updatedUser.isAdmin,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "3d" });
+      console.log(token);
+      if(updatedUser){
+        const {_id,firstName,lastName,username,email,password,image,isAdmin,bankid} = updatedUser;
+        res.status(200).json({_id,firstName,lastName,username,email,password,image,isAdmin,bankid, token});
+      }
+      else{
+        res.status(500).json({ message: "No user with this email!" });  
+      }
+      
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -38,13 +49,14 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET USER
-router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
+router.post("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
-    res.status(200).json(others);
+    console.log(others);
+    return res.status(200).json(others);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 

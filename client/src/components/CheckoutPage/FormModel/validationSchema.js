@@ -29,8 +29,6 @@ export default [
       .required(`${city.requiredErrorMsg}`),
   }),
   Yup.object().shape({
-    [username.name]: Yup.string().required(`${username.requiredErrorMsg}`),
-    [accountNumber.name]: Yup.string().required(`${accountNumber.requiredErrorMsg}`),
     [email.name]: Yup.string().required(`${email.requiredErrorMsg}`),
     
   })

@@ -31,7 +31,7 @@ const AddProduct = () => {
     };
     getProducts();
   }, []);
-  // console.log(products);
+  console.log(products);
   
   const handleStock = (temp)=>{
     if(temp===true){
@@ -70,6 +70,7 @@ const AddProduct = () => {
     }
     // console.log(formData);
     dispatch(addProductFromSupp(formData, user ));
+    document.getElementById(event.target.id).textContent="PRODUCT ADDED";
   }
   
   return (
@@ -96,7 +97,7 @@ const AddProduct = () => {
               />
             </div>
             <div className="right">
-              <form id={product._id}>
+              <form >
                 <div className="formInput" >
                     <label>Title</label>
                     <h6>{product.title}</h6>

@@ -216,7 +216,7 @@ const Product = ({user, setUser}) => {
           </AddContainer>
         </InfoContainer>
       </Wrapper>
-      <Newsletter />
+      {/* <Newsletter /> */}
       <Footer />
     </Container>
   );

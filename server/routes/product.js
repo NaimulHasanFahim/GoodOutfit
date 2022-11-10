@@ -89,7 +89,7 @@ router.get("/find/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
-  // console.log(qCategory);
+  console.log(qCategory);
   try {
     let products;
 
@@ -104,7 +104,7 @@ router.get("/", async (req, res) => {
     } else {
       products = await Product.find();
     }
-    // console.log(products);
+    console.log(products);
 
     res.status(200).json(products);
   } catch (err) {

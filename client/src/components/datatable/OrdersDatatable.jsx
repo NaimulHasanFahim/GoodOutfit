@@ -1,7 +1,8 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { getOrdersData } from "../../actions/admin";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./../../pages/list/list.scss";
@@ -54,28 +55,47 @@ const userColumns = [
 //temporary data
 
 const OrdersDatatable = () => {
-  const [data, setData] = useState(useSelector(state=>state.admin.ordersDetails));
   const navigate = useNavigate();
-  
-  
+  const [user, setUser] = useState(
+    useSelector((state) => state.user.currentUser)
+  );
+  const [orders, setOrders] = useState(
+    useSelector((state) => state.admin.ordersDetails)
+  );
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAllData = () => {
+      dispatch(getOrdersData(user, setOrders));
+      setLoading(false);
+    };
+
+    getAllData();
+  }, []);
+  // console.log(orders);
+
   let tempList = [];
 
-  data.map((temp) => (
-    tempList.push({id: temp._id, transactionId : temp.transactionId, userId : temp.userId, address : temp.address, status : temp.status })
-  ));
-  console.log(tempList);
-
+  orders.map((temp) =>
+    tempList.push({
+      id: temp._id,
+      transactionId: temp.transactionId,
+      userId: temp.userId,
+      address: temp.address,
+      status: temp.status,
+    })
+  );
+  // console.log(tempList);
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    setOrders(orders.filter((item) => item.id !== id));
   };
 
-  const handleView = (id) =>{
+  const handleView = (id) => {
     console.log(id);
     navigate(`/admin/orders/${id}`);
-
-  }
-
+  };
 
   const actionColumn = [
     {
@@ -86,7 +106,12 @@ const OrdersDatatable = () => {
         return (
           <div className="cellAction">
             {/* <Link to="/users/test" style={{ textDecoration: "none" }}> */}
-            <div className="viewButton" onClick={()=>handleView(params.row.id)}>View</div>
+            <div
+              className="viewButton"
+              onClick={() => handleView(params.row.id)}
+            >
+              View
+            </div>
             {/* </Link> */}
             <div
               className="deleteButton"
@@ -100,37 +125,46 @@ const OrdersDatatable = () => {
     },
   ];
 
-    return (
-        <div className="list">
-          <Sidebar />
-          <div className="listContainer">
-            <Navbar />
-            <div className="datatable">
-                <div className="datatableTitle">
-                    All Orders
-                    <Link to="/admin/orders/new" className="link">
-                        Add New
-                    </Link>
-                </div>
+  return (
+    <div className="list">
+      <Sidebar />
+      <div className="listContainer">
+        <Navbar />
+        {loading === true || orders === null ? (
+          <div>
+            <div>Processing Request</div>
+            <div className="loader-container">
+              <div className="spinner"></div>
+            </div>
+          </div>
+        ) : (
+          <div className="datatable">
+            <div className="datatableTitle">
+              All Orders
+              <Link to="/admin/orders/new" className="link">
+                Add New
+              </Link>
+            </div>
             <DataGrid
-            className="datagrid"
-            rows={tempList}
-            columns={userColumns.concat(actionColumn)}
-            pageSize={9}
-            rowsPerPageOptions={[9]}
-            sx={{
-              boxShadow: 2,
-              border: 2,
-              borderColor: 'teal',
-              '& .MuiDataGrid-cell:hover': {
-                color: 'teal',
-              },
-            }}
+              className="datagrid"
+              rows={tempList}
+              columns={userColumns.concat(actionColumn)}
+              pageSize={9}
+              rowsPerPageOptions={[9]}
+              sx={{
+                boxShadow: 2,
+                border: 2,
+                borderColor: "teal",
+                "& .MuiDataGrid-cell:hover": {
+                  color: "teal",
+                },
+              }}
             />
-            </div>
-            </div>
-        </div>
-      );
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default OrdersDatatable;

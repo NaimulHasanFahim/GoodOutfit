@@ -57,7 +57,7 @@ const SingleOrder = () => {
     let countDelivery =0;
     order.products.map((temp) =>{ 
       countProd ++;
-      if(temp.delivery === "Approved"){
+      if(temp.delivery === "Shipped"){
         countDelivery++;
       }})
 
@@ -88,7 +88,7 @@ const SingleOrder = () => {
       // console.log(orderProd);
 
       const bankData = {
-        amount: price - 10,
+        amount: (price - 10) * quantity,
         sender: "01521532529",
         reciever: supplierBankId,
         password: "12345",
@@ -176,8 +176,8 @@ const SingleOrder = () => {
     }
   }
 
-  if(order != null && order.status == "Pending"){
-    if( called == 0){
+  if(order != null && order.status === "Pending"){
+    if( called === 0){
       setCalled(10);
       checkDelivery();
     }

@@ -37,7 +37,8 @@ const userSlice = createSlice({
     logout: (state) => {
       state.currentUser = null;
       state.error = false;
-      // window.localStorage.removeItem('persist:root');
+      window.location.reload();
+      window.localStorage.removeItem('persist:root');
       // storage.removeItem('persist:root')
       // storage.removeItem('persist:otherKey')
     },

@@ -12,22 +12,32 @@ const userColumns = [
   {
     field: "ecom_orderId",
     headerName: "User Order ID",
-    width: 200,
+    width: 220,
+  },
+  {
+    field: "productId",
+    headerName: "Product ID",
+    width: 220,
+  },
+  {
+    field: "supplierOrderId",
+    headerName: "Supplier Order ID",
+    width: 250,
   },
   {
     field: "address",
     headerName: "Delivery Address",
-    width: 200,
+    width: 150,
   },
   {
     field: "quantity",
     headerName: "Quantity",
-    width: 200,
+    width: 120,
   },
   {
     field: "status",
     headerName: "Status",
-    width: 160,
+    width: 130,
   },
 ];
 const SupplierOrderDatatable = () => {
@@ -126,7 +136,9 @@ const SupplierOrderDatatable = () => {
         ecom_orderId: temp.ecom_orderId,
         address: temp.address,
         status: temp.status,
-        quantity: temp.quantity
+        quantity: temp.quantity,
+        supplierOrderId : temp._id,
+        productId : temp.ecom_prodId
       });
     }
     );  

@@ -1,4 +1,3 @@
-import { Search } from "@mui/icons-material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import React from "react";
@@ -78,17 +77,19 @@ const Navbar = ({user, setUser}) => {
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
-          <SearchContanier>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <Logo>GoodOutfit</Logo>
+          </Link>
+          {/* <SearchContanier>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContanier>
+          </SearchContanier> */}
         </Left>
-        <Center>
+        {/* <Center>
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-            <Logo>Chic Closet</Logo>
+            <Logo>GoodOutfit</Logo>
           </Link>
-        </Center>
+        </Center> */}
 
         {user===null  || user===undefined ? (
           <Right>
@@ -117,6 +118,7 @@ const Navbar = ({user, setUser}) => {
                   <ShoppingCartIcon />
                 </Badge>
               </Link>
+              {/* <Language>EN</Language> */}
             </MenuItem>
           </Right>
         ) : (
@@ -128,6 +130,14 @@ const Navbar = ({user, setUser}) => {
               >
                 Profile
               </Link>
+            </MenuItem>
+            <MenuItem>
+              {user.isAdmin && <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/admin"
+              >
+                Admin Panel
+              </Link>}
             </MenuItem>
             <MenuItem onClick={LogOut}> 
               Logout
@@ -141,6 +151,7 @@ const Navbar = ({user, setUser}) => {
                   <ShoppingCartIcon />
                 </Badge>
               </Link>
+              {/* <Language>EN</Language> */}
             </MenuItem>
           </Right>
         )}
