@@ -1,7 +1,7 @@
 <h1 align="center">
 GoodOutfit
 </h1>
-<p>An E-commerce website for Web Project. This project is separated into two sections: user and admin. In the user section, users can view products in several categories and filter them by color and size. The user can also sort the products from newest to oldest or by price. Users can view product details, add to cart, place order, and track orders on the E-commerce website. To place an order, each user must first register and log in with their credentials. When a user place an order a bank’s payment gateway will appear prompting the user to enter information and a secret key in order to complete the transaction. When all of the requirements are met, the bank will produce a transaction id, and the funds will be transferred from the user’s bank account to the E-commerce bank account. Ecommerce frontend interact with two other api [LeatherWallet](https://github.com/NaimulHasanFahim/LeatherWallet) and a [Supplier backend API](https://github.com/NaimulHasanFahim/Suppliers). Whole workflow can be understand from this [pdf](https://github.com/NaimulHasanFahim/Goodwear/issues/2#issue-1443971165).</p>
+<p>An E-commerce website for Web Project. This project is separated into two sections: user and admin. In the user section, users can view products in several categories and filter them by color and size. The user can also sort the products from newest to oldest or by price. Users can view product details, add to cart, place order, and track orders on the E-commerce website. To place an order, each user must first register and log in with their credentials. When a user place an order a bank’s payment gateway will appear prompting the user to enter information and a secret key in order to complete the transaction. When all of the requirements are met, the bank will produce a transaction id, and the funds will be transferred from the user’s bank account to the E-commerce bank account. Ecommerce frontend interact with two other api <a href="https://github.com/NaimulHasanFahim/LeatherWallet">LeatherWallet</a> and a <a href="https://github.com/NaimulHasanFahim/Suppliers">Supplier</a> backend API. Whole workflow can be understand from this <a href="https://github.com/NaimulHasanFahim/Goodwear/issues/2#issue-1443971165">PDF</a>.</p>
 <p align="center">
 MongoDB, Expressjs, React, Redux, Nodejs
 </p>
@@ -98,7 +98,8 @@ Single product details.
 Cart details.
 ![Cart details.](https://user-images.githubusercontent.com/40023605/201540307-7dbf11de-c848-48ad-b08e-34b834f8b207.png)
 
-
+Admin panel
+![Admin Panel](https://user-images.githubusercontent.com/40023605/201541611-ba46c010-6cbe-4c7e-8ebe-ec085ae12c7e.png)
 
 ## BUGs or comments
 [Create new Issues](https://github.com/NaimulHasanFahim/webproject/issues) (preferred)
