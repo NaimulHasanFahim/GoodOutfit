@@ -46,7 +46,7 @@ router.post("/add", verifyTokenAndAdmin, async (req, res) => {
 
 //DELETE
 router.post("/delete", verifyTokenAndAdmin, async (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   try {
     await Product.findByIdAndDelete(req.body.productId);
     return res.status(200).json("Product has been deleted...");
@@ -73,12 +73,12 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 //GET PRODUCT
 router.get("/find/:id", async (req, res) => {
-  console.log(req.params.id);
+  ///console.log(req.params.id);
   // console.log("Hello in the find single page");
   try {
     // console.log('Hi');
     const product = await Product.findById(req.params.id);
-    console.log(product);
+    ///console.log(product);
     return res.status(200).json(product);
   } catch (err) {
     return res.status(500).json(err);
@@ -89,7 +89,7 @@ router.get("/find/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
-  console.log(qCategory);
+  //console.log(qCategory);
   try {
     let products;
 
@@ -104,7 +104,7 @@ router.get("/", async (req, res) => {
     } else {
       products = await Product.find();
     }
-    console.log(products);
+    //console.log(products);
 
     res.status(200).json(products);
   } catch (err) {

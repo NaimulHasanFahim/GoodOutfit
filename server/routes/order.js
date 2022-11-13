@@ -216,7 +216,7 @@ router.post("/allorders", async (req, res) => {
   try {
     let temp={};
     const tt = await Order.find();
-    console.log(tt);
+    //console.log(tt);
     Order.find()
       .populate("products.productId")
       .exec(function (err, all_transaction) {

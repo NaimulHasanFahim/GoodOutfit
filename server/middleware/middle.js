@@ -4,7 +4,7 @@ import jsonwebtoken from "jsonwebtoken";
 export const verifyToken = (req, res, next) => {
   // console.log(req.headers);
   const authHeader = req.body.token;
-  console.log(authHeader);
+  ///console.log(authHeader);
   if (authHeader) {
     // const token = authHeader.split(" ")[1];
     const token = authHeader;

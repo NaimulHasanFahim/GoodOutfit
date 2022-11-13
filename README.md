@@ -80,17 +80,23 @@ styled-components : ^5.3.5 |
 
 # Screenshots of this project
 
-User visit public and Home page
-![User visit public and Home page](https://user-images.githubusercontent.com/40023605/187589352-7e290dfe-f5a4-49ab-abf5-8698b22f2189.png)
+Landing page
+![Landing page](https://user-images.githubusercontent.com/40023605/201540312-a02dae10-de72-4771-b0c1-4108fd9ed3c0.png)
 
 User can sign in or sign up
-![User can sign in or sign up](https://user-images.githubusercontent.com/40023605/187589358-93b1112e-bb3d-4d3f-bbde-16a6d4bd15b6.png)
+![User can sign in or sign up](https://user-images.githubusercontent.com/40023605/201540387-f1615c85-f473-42f2-a538-0ffb13a68c82.png)
 
-After signing in user can go to account route and make request to token-protected API endpoint
-![After signing in user can go to account route](https://user-images.githubusercontent.com/40023605/187589353-8c575245-e9fa-4d3b-9842-2d7d842057ec.png)
+After first time sign in a popup appears to enter user bank information.
+![After first time sign in a popup appears to enter user bank information.](https://user-images.githubusercontent.com/40023605/201540300-87751815-16b2-407c-bc8f-032803c8b61a.png)
 
-Admin Panel Landing Page
-![Admin can control all the actions from here](https://user-images.githubusercontent.com/40023605/187589360-c25ee499-95e8-4fae-88be-6aa3d600f3b4.png)
+There are three category of products.
+![There are three category of products.](https://user-images.githubusercontent.com/40023605/201540313-bde827c5-961d-4870-8de5-d774213bbc8c.png)
+
+Single product details.
+![Single product details.](https://user-images.githubusercontent.com/40023605/201540304-64e6d080-7c22-40b4-8a3b-e095dac9ff52.png)
+
+Cart details.
+![Cart details.](https://user-images.githubusercontent.com/40023605/201540307-7dbf11de-c848-48ad-b08e-34b834f8b207.png)
 
 
 
