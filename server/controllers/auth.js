@@ -3,7 +3,7 @@
 // import Base64 from 'crypto-js/enc-base64';
 import cryptoJs from "crypto-js";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 export const signin = async (req, res) => {
   const { email} = req.body;
