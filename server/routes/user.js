@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middleware/middle.js";
-import User from "../models/user.js";
+import User from "./../models//user.js";
 const router = express.Router();
 
 //UPDATE
@@ -53,7 +53,7 @@ router.post("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
-    ///console.log(others);
+    //console.log(others);
     return res.status(200).json(others);
   } catch (err) {
     return res.status(500).json(err);
