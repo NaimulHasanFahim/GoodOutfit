@@ -112,7 +112,6 @@ const Modal = ({ showModal, setShowModal, user, setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("Hello")
     const id=user._id;
     
     dispatch(updateBankData(formData,id, navigate, setUser))
@@ -144,7 +143,6 @@ const Modal = ({ showModal, setShowModal, user, setUser }) => {
     (e) => {
       if (e.key === "Escape" && showModal) {
         setShowModal(false);
-        console.log("I pressed");
       }
     },
     [setShowModal, showModal]
@@ -154,8 +152,7 @@ const Modal = ({ showModal, setShowModal, user, setUser }) => {
     document.addEventListener("keydown", keyPress);
     return () => document.removeEventListener("keydown", keyPress);
   }, [keyPress]);
-  console.log(showModal);
-
+  
   return (
     <>
       {showModal ? (

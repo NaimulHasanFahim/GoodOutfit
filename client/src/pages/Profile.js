@@ -84,13 +84,11 @@ const Profile = ({user, setUser}) => {
   
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
-  console.log(user);
   
   useEffect(()=>{
     const getOrdersByUserId = async () =>{
       try {
         const res = await api.getOrdersDetailsByUserId(user._id);
-        // console.log(res);
         setOrders(res.data);
       } catch (error) {
         console.log(error);
@@ -98,11 +96,9 @@ const Profile = ({user, setUser}) => {
     };
     getOrdersByUserId();
   }, []);
-  // console.log(orders);
-
+  
   const orderDetails = (event)=>{
     const temp = event.target.getAttribute('id');
-    console.log(event.target.getAttribute('id'));
     navigate(`/orderDetails/${temp}`);
   }
 

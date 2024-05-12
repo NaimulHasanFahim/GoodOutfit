@@ -12,14 +12,10 @@ const Container = styled.div`
 const Products = ({cat, filters, sort}) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-    // console.log(popularProducts);
-    // console.log(cat, filters, sort);
-  // console.log(products);
   useEffect(()=>{
     const getProducts = async () =>{
       try {
         const res = await axios.get(cat? `http://localhost:5000/products?category=${cat}`:"http://localhost:5000/products" );
-        // console.log(res);
         setProducts(res.data);
       } catch (error) {
         
@@ -49,8 +45,6 @@ const Products = ({cat, filters, sort}) => {
       [...prev].sort((a,b)=>b.createdAt - a.createdAt));
     }
   },[sort]);
-  // console.log(filteredProducts);
-  // console.log(products);
   return (
     <Container>
       {cat ? filteredProducts.map((item) => (<Product item={item} key={item._id}/>)) : products.slice(0,9).map((item) => (<Product item={item} key={item._id} />))

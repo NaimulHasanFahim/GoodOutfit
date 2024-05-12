@@ -9,7 +9,6 @@ margin: 2rem;
 `;
 
 const  CheckoutSuccess = ({newOrderId})=>{
-  console.log(newOrderId);
   return (
     <Container>
       <Typography variant="h5" gutterBottom>

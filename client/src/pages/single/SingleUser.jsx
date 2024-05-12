@@ -13,8 +13,7 @@ const SingleUser = () => {
   const [singleUser, setSingleUser] = useState(null);
   const [user, setUser] = useState( useSelector((state) => state.user.currentUser));
   const [userOrders, setUserOrders] = useState(null);
-  // console.log(user);
-
+  
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -22,7 +21,6 @@ const SingleUser = () => {
       setLoading(true);
       const { data } = await axios.get(
         `http://localhost:5000/orders/find/${userId.userId}`);
-        console.log(data);
         setUserOrders(data);
       setLoading(false);
     }
@@ -32,7 +30,6 @@ const SingleUser = () => {
         const { data } = await axios.post(
           `http://localhost:5000/users/find/${userId.userId}`,{isAdmin : user.isAdmin});
         setSingleUser(data);
-        console.log(singleUser);
         setLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -43,7 +40,6 @@ const SingleUser = () => {
     // checkDelivery();
   }, [userId]);
 
-  // console.log(user);
   
   return (
     <div className="single">

@@ -12,12 +12,10 @@ const TableHomeUser = ({ userOrders }) => {
   const navigate = useNavigate();
   const handleOrderClick = (event) => {
     const temp = event.target.getAttribute("id");
-    console.log(event.target.getAttribute("id"));
     navigate(`/admin/orders/${temp}`);
   };
   const handleUserClick = (event) => {
     const temp = event.target.getAttribute("id");
-    console.log(event.target.getAttribute("id"));
     navigate(`/admin/users/${temp}`);
   };
 

@@ -13,16 +13,13 @@ const TableHome = ({ orders }) => {
 
   const handleOrderClick = (event) => {
     const temp = event.target.getAttribute("id");
-    console.log(event.target.getAttribute("id"));
     navigate(`/admin/orders/${temp}`);
   };
   const handleUserClick = (event) => {
     const temp = event.target.getAttribute("id");
-    console.log(event.target.getAttribute("id"));
     navigate(`/admin/users/${temp}`);
   };
-  console.log(orders);
-
+  
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

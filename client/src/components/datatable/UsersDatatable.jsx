@@ -70,8 +70,7 @@ const UsersDatatable = () => {
 
     getAllData();
   }, []);
-  console.log(users);
-
+  
   let tempList = [];
 
   users.map((temp) =>
@@ -82,14 +81,12 @@ const UsersDatatable = () => {
       email: temp.email,
     })
   );
-  console.log(tempList);
-
+  
   const handleDelete = (id) => {
     setUser(users.filter((item) => item.id !== id));
   };
 
   const handleView = (id) => {
-    console.log(id);
     navigate(`/admin/users/${id}`);
   };
 

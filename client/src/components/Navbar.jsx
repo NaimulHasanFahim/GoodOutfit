@@ -64,7 +64,6 @@ const MenuItem = styled.div`
 const Navbar = ({user, setUser}) => {
   // const [user, setUser] = useState(useSelector((state) => state.user.currentuser));
   const cart = useSelector((state) => state.cart);
-  // console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

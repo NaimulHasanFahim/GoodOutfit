@@ -155,7 +155,6 @@ const Cart = ({user, setUser}) => {
 
   const handleQuantity = (type, id) => {
     if (type === "dec") {
-      console.log("Decreasing " + id);
       const productMatched = cart.products.filter((i)=>(i._id === id));
       const productRemain = cart.products.filter((i)=>(i._id !== id));
 
@@ -173,7 +172,6 @@ const Cart = ({user, setUser}) => {
       if(productMatchedList !== [] && productMatchedList[0].quantity>1){
         productMatchedList[0].quantity -=1;
         productRemainList.push(productMatchedList[0]);
-        // console.log(productRemain);
        // dispatch(decreaseCartItemById(productRemainList));
       }
       else{
@@ -181,7 +179,6 @@ const Cart = ({user, setUser}) => {
       } 
       //window.location.reload();      
     } else {
-      console.log("Increasing " + id);
       let productMatched = cart.products.filter((i)=>(i._id === id));
       let productRemain = cart.products.filter((i)=>(i._id !== id));
       let payload =[]; 
@@ -189,7 +186,6 @@ const Cart = ({user, setUser}) => {
         productMatched[0].quantity +=1;
         payload.push(productMatched[0]);
         productRemain.map((i)=>payload.push(i));
-        // console.log(payload);
         //dispatch(increaseCartItemById(payload));
       }
     }

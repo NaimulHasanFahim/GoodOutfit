@@ -43,9 +43,6 @@ function _renderStepContent(step, cart, bankid) {
 const API = axios.create({ baseURL: 'http://localhost:8000/api' });
 
 const CheckoutPage = ({cart, currentUser}) =>{
-  // const classes = useStyles();
-  // console.log(steps.length);
-  // console.log(cart);
   const [activeStep, setActiveStep] = useState(0);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length-2;
@@ -61,23 +58,17 @@ const CheckoutPage = ({cart, currentUser}) =>{
     await _sleep(1000);
     const temp =JSON.stringify(values, null, 2);
     // (currentUser, cart, addressData, bankData)
-    // console.log();
     
     const addressData = {"address1" : values.address1, "city" : values.city};
     const bankData ={"sender" : bankid,"transactionId" : "", "reciever" : "01521532529" , "password" : values.password, "amount" : cart.total};
-    // console.log(bankData);
-    // console.log(addressData);
     
     try{
       const ans = API.post('/transaction/payment', bankData);
       ans.then(function(result){
-        console.log(result);
         let transactionId = result.data.transactionId;
-        console.log(transactionId);
         dispatch(createOrder(currentUser, cart, addressData, transactionId, setNewOrderId));
         dispatch(clearCart());
       })
-      // console.log(ans);
     }catch(error){
       console.log(error);
     }

@@ -46,7 +46,6 @@ height: 90% ;
 `;
 
 export default function AddressForm(props) {
-  // console.log(props);
   const {
     formField: {
       firstName,

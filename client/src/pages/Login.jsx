@@ -79,10 +79,8 @@ const Login = ({user, setUser}) => {
 
   const [formData, setFormData] = useState(initialState);
   const { isFetching, error } = useSelector((state) => state.user);
-  // console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("Hello")
     dispatch(signin(formData,navigate, setUser));
   };
 

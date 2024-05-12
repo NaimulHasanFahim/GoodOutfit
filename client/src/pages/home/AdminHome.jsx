@@ -14,9 +14,6 @@ const AdminHome = ({user}) => {
   // const [products, setProducts] = useState(useSelector(state=>state.admin.productsDetails));
   // const [users, setUsers] = useState(useSelector(state=>state.admin.usersDetails));
   
-  // console.log(users)
-  console.log(orders);
-  
   useEffect(() => {
     
     const getAllData = (  )=>{
@@ -28,11 +25,6 @@ const AdminHome = ({user}) => {
 
     getAllData();
   }, []);
-
-  // console.log(orders);
-  // console.log(widget);
-  // console.log(users);
-  // console.log(products);
 
   return (
     <div className='home'>

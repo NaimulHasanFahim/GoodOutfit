@@ -66,11 +66,9 @@ const ProductsDatatable = ({ data }) => {
 
     getAllData();
   }, []);
-  console.log(products);
-
+  
   let tempList = [];
-  // console.log(data1);
-
+  
   products.map((temp) =>
     tempList.push({
       id: temp._id,
@@ -81,11 +79,8 @@ const ProductsDatatable = ({ data }) => {
       inStock: temp.inStock,
     })
   );
-  console.log(tempList);
-  console.log(products);
 
   const handleDelete = (id) => {
-    console.log(id);
     const formData = {
       productId: id,
       isAdmin: user.isAdmin,
@@ -101,7 +96,6 @@ const ProductsDatatable = ({ data }) => {
     const getProducts = async () => {
       try {
         const res = await axios.get("http://localhost:5000/products");
-        // console.log(res);
         setProducts(res.data);
       } catch (error) {
         console.log(error);
@@ -111,7 +105,6 @@ const ProductsDatatable = ({ data }) => {
   }, [deleteHandle]);
 
   const handleView = (id) => {
-    console.log(id);
     navigate(`/admin/products/${id}`);
   };
 

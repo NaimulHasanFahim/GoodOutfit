@@ -73,8 +73,7 @@ const OrdersDatatable = () => {
 
     getAllData();
   }, []);
-  // console.log(orders);
-
+  
   let tempList = [];
 
   orders.map((temp) =>
@@ -86,14 +85,12 @@ const OrdersDatatable = () => {
       status: temp.status,
     })
   );
-  // console.log(tempList);
-
+  
   const handleDelete = (id) => {
     setOrders(orders.filter((item) => item.id !== id));
   };
 
   const handleView = (id) => {
-    console.log(id);
     navigate(`/admin/orders/${id}`);
   };
 

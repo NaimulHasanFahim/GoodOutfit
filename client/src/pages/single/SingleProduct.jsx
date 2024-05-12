@@ -30,8 +30,6 @@ const SingleProduct = () => {
     getProductById();
     // checkDelivery();
   }, [productId]);
-
-  console.log(product);
   
   return (
     <div className="single">

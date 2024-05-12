@@ -11,7 +11,6 @@ const Container = styled.div``;
 
 const ReviewOrder = ({cart, bankid})=>{
   const { values: formValues } = useFormikContext();
-  // console.log(cart);
   return (
     <Container>
       <Typography variant="h6" gutterBottom>

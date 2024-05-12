@@ -28,15 +28,11 @@ function App() {
   
   const [user, setUser] =useState( useSelector(state=>state.user.currentUser) );
   const [data, setData] = useState(useSelector(state=>state.admin.productsDetails));
-  // console.log(data);
-  // const cart = useSelector((state) => state.cart);
   let isAdmin = false;
   
   if(user!=null){
     isAdmin = user?.isAdmin;
   }
-  // console.log(isAdmin);
-  
   
   return (
     <BrowserRouter>

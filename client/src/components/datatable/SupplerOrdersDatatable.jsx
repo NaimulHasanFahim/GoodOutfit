@@ -55,7 +55,6 @@ const SupplierOrderDatatable = () => {
         const { data } = await axios.get(
           `http://localhost:3006/api/order/showall`
         );
-        // console.log(data);
         setData(data);
         setLoading(false);
       } catch (error) {
@@ -72,7 +71,6 @@ const SupplierOrderDatatable = () => {
   };
 
   const handleView = (id) => {
-    console.log(id);
     navigate(`/admin/orders/${id}`);
   };
   async function handleUpdate() {
@@ -85,12 +83,10 @@ const SupplierOrderDatatable = () => {
       try {
         // API CALL TO ECOMMERCE BACKEND TO UPDATE ORDER STATUS
         const { data } = await axios.post(`http://localhost:5000/orders/update/delivery`, {ecom_orderId, status, productId, isAdmin : true});
-        console.log(data);
         orderStatusApiCallResult = [...orderStatusApiCallResult, data];
       } catch (error) {
         console.log(error);
       }
-      // console.log(orderStatusApiCallResult);
     });
     setLoading(false);
   }
@@ -147,8 +143,7 @@ const SupplierOrderDatatable = () => {
     handleUpdate();
     setCalled(true);
   }
-  // console.log(tempList);
-  console.log(orderUpdate);
+  
   return (
     <div className="list">
       <Sidebar />

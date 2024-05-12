@@ -15,7 +15,6 @@ const ProductDetails = ({cart})=>{
   // const classes = useStyles();
   // const cart = useSelector(state=>state.user.currentUser);
   const products=cart.products;
-  console.log(products);
   return (
     <List disablePadding>
       {products.map(product => (

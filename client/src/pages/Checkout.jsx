@@ -46,11 +46,9 @@ const Checkout = ({ user, setUser }) => {
 
   const handleQuantity = (type) => {
     if (type === "dec") {
-      console.log("Decreasing");
       // quantity > 1 && product.quantity--;
     } else {
       // product.quantity--
-      console.log("Increasing");
     }
   };
 

@@ -22,7 +22,6 @@ const VerifyNow = styled.div`
 const SingleOrder = () => {
   // const params = new URLSearchParams(window.location.pathname);
   const orderId = useParams();
-  // console.log(orderId);
   const [order, setOrder] = useState(null);
   const dispatch = useDispatch();
   const [user, setUser] = useState(
@@ -40,7 +39,6 @@ const SingleOrder = () => {
           `http://localhost:5000/orders/${orderId.orderId}`,
           { isAdmin: user.isAdmin }
         );
-        // console.log(data);
         setOrder(data);
         setLoading(false);
       } catch (error) {
@@ -66,7 +64,6 @@ const SingleOrder = () => {
         try {
           const respo1 = axios.post( `http://localhost:5000/orders/update/${orderId.orderId}`,
             { isAdmin: user.isAdmin, updatedData : { status : "Shipped" } });
-            console.log(respo1);
             window.location.reload();
         } catch (error) {
           
@@ -77,7 +74,6 @@ const SingleOrder = () => {
   async function payToSellerAndPlaceOrder(event) {
     event.preventDefault();
     let supplerTransaction = [];
-    // console.log(event.target.id);
     setLoading(true);
     const prodList = order.products;
     prodList.map(async (orderProd) => {
@@ -85,8 +81,7 @@ const SingleOrder = () => {
         orderProd.productId;
       const quantity = orderProd.quantity;
       const address = order.address;
-      // console.log(orderProd);
-
+     
       const bankData = {
         amount: (price - 10) * quantity,
         sender: "01521532529",
@@ -101,7 +96,6 @@ const SingleOrder = () => {
         bankApiCallResult = [...bankApiCallResult, data];
         let transactionId = data.transactionId;
         if (transactionId != null) {
-          console.log(orderProd.productId._id);
           supplerTransaction.push({productId : _id,transactionId : transactionId})
           
           //API CALL TO PALACE ORDER TO SUPPLIER
@@ -120,12 +114,10 @@ const SingleOrder = () => {
                 ecom_prodId: orderProd.productId._id
               }
             );
-            console.log(data);
             if(data?.message === "Product creation successfull"){
               const respo1 = axios.post(
                 `http://localhost:5000/orders/update/${orderId.orderId}`,
                 { isAdmin: user.isAdmin, updatedData : { supplierPaid : true } });
-                console.log(respo1);
                 window.location.reload();
             }
           } catch (error) {
@@ -137,7 +129,6 @@ const SingleOrder = () => {
       } catch (error) {
         console.log(error);
       }
-      // console.log(bankApiCallResult);
     });
     // console.log(supplerTransaction);
     // try {
@@ -154,20 +145,16 @@ const SingleOrder = () => {
 
   async function verifyTransaction(event) {
     event.preventDefault();
-    console.log(event.target.id);
     setLoading(true);
 
     try {
       await API.get(`/transaction/verify/${event.target.id}`).then(function (result) {
-        console.log(result);
         if (result?.data?.message === "verified") {
-          // console.log(userisAdmin);
           const res = axios.post(
             `http://localhost:5000/orders/update/${orderId.orderId}`,
             { isAdmin: user.isAdmin, updatedData : { userTransactionVerified : true} }
           );
-          // console.log(res);
-          window.location.reload();
+        window.location.reload();
         }
         setLoading(false);
       });

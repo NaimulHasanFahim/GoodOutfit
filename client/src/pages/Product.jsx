@@ -117,23 +117,19 @@ const Button = styled.button`
 
 const Product = ({user, setUser}) => {
   const location = useLocation();
-  // console.log(location);
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  // console.log(dispatch);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   
   const [cart, setCart] = useState(useSelector((state) => state.cart));
 
-  // console.log(product);
   useEffect(()=>{
      const getProduct = async ()=>{
       try {  
         const res = await axios.get("http://localhost:5000/products/find/"+id );
-        // console.log(res);
         setProduct(res.data);
       } catch (error) {
         console.log(error);
@@ -150,12 +146,9 @@ const Product = ({user, setUser}) => {
     }
   };
   const handleClick = (event) => {
-    // console.log(event.target.id);
-    // console.log(cart);
     const temp1 = cart.products;
     let yes =true;
     for( const i in temp1){
-      console.log(temp1[i]._id);  
       if(temp1[i]._id== event.target.id){
         console.log("Product Already Exist inside the Cart");
         yes=false;

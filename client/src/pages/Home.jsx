@@ -17,7 +17,6 @@ margin: 0px 0px;
 const Home = ({user, setUser}) => {
 
   const [showModal, setShowModal] = useState(false);
-  console.log(user);
   useEffect(()=>{
     
     const openModal = () => {

@@ -35,8 +35,6 @@ const router = express.Router();
 router.post("/", verifyToken, async (req, res) => {
   
   const {userId, products, amount, address, transactionId} = req.body;
-  console.log("Inside the body of add order");  
-  // console.log(req.body);
   try {
     
     const newOrder = new Order({
@@ -46,9 +44,7 @@ router.post("/", verifyToken, async (req, res) => {
       amount,
       address,
     });
-    // console.log(newOrder);
     const result = await newOrder.save();
-    // console.log(result);  
     } catch (err) {
     res.status(500).json(err);
   }
@@ -79,7 +75,6 @@ router.post("/update/delivery", verifyTokenAndAdmin, async (req, res) => {
   // console.log(status);
   try{
     const updatedOrder = await Order.findOne({_id : ecom_orderId, "products.productId" : productId});
-    console.log(updatedOrder);
     // updatedOrder.map((single)=>{
     //   single.products.map((temp)=>{
     //     // console.log(temp);
@@ -91,15 +86,10 @@ router.post("/update/delivery", verifyTokenAndAdmin, async (req, res) => {
     // })
 
     updatedOrder.products.map((temp)=>{
-      // console.log(temp);
       if(temp.productIdStr == productId){
         temp.delivery = status;
-        console.log(temp.delivery);
-        // console.log(temp);
     }});
-    // console.log(updatedOrder[0]);    
     const newOr = await updatedOrder.save();
-    // console.log(newOr);
     return res.status(200).json(updatedOrder[0]);
   } catch (err) {
     res.status(500).json(err);
@@ -109,7 +99,6 @@ router.post("/update/delivery", verifyTokenAndAdmin, async (req, res) => {
 //UPDATE
 router.post("/update/:id", verifyTokenAndAdmin, async (req, res) => {
   const updatedData = req.body.updatedData;
-  console.log(updatedData);
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
@@ -125,12 +114,9 @@ router.post("/update/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 router.post("/:id", verifyTokenAndAdmin, async (req, res) => {
-  console.log(req.params.id);
   try {
-    // let temp ="";
     const temp = await Order.findById(req.params.id).populate('products.productId');
     
-    console.log(temp);
     return res.status(200).json(temp);
   } catch (err) {
     return res.status(500).json(err.message);
@@ -139,7 +125,6 @@ router.post("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 //UPDATE USER TRANSACTION ID VERIFICATION
 router.post("/verify/usertransaction/:id", verifyTokenAndAdmin, async (req, res) => {
-  // console.log(req.params.id);
   const { id } = req.params;
   try {
     await Order.findByIdAndUpdate(id, { userTransactionVerified: true }, { new: true }); 
@@ -163,10 +148,8 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 //GET USER ORDERS
 router.get("/find/:userId", async (req, res) => {
-  // console.log(req.params);
   try {
     // const orders = await Order.find({ userId: req.params.userId });
-    // console.log(orders);
     let temp="";
     Order.find({userId: req.params.userId})
       .populate("products.productId")
@@ -175,7 +158,6 @@ router.get("/find/:userId", async (req, res) => {
           console.log(err);
         }
         temp = all_transaction;
-        // console.log(temp);
         return res.status(200).json(temp);
       });
 
@@ -186,10 +168,8 @@ router.get("/find/:userId", async (req, res) => {
 });
 
 router.get("/allorders", async (req, res) => {
-  // console.log(req.params);
   try {
     // const orders = await Order.find({ userId: req.params.userId });
-    // console.log(orders);
     let temp="";
     Order.find()
       .populate("products.productId")
@@ -198,7 +178,6 @@ router.get("/allorders", async (req, res) => {
           console.log(err);
         }
         temp = all_transaction;
-        // console.log(temp);
         return res.status(200).json(temp);
       });
 
@@ -212,19 +191,13 @@ router.get("/allorders", async (req, res) => {
 // //GET ALL
 
 router.post("/allorders", async (req, res) => {
-  console.log("Inside all orders");
   try {
     let temp={};
     const tt = await Order.find();
-    //console.log(tt);
     Order.find()
       .populate("products.productId")
       .exec(function (err, all_transaction) {
-        if (err){
-          // console.log(err);
-        }
         temp = all_transaction;
-        // console.log(all_transaction);
       });
     return res.status(200).json(temp);
   } catch (err) {

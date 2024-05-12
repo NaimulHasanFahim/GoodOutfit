@@ -44,7 +44,6 @@ export const getUsersData = (userData) => async (dispatch, setUsers)=>{
 export const getOrdersData = (userData, setOrders) => async (dispatch)=>{
     dispatch(startFetching());
     try {
-        // console.log(userData);
         const { data } = await api.getOrdersData(userData);
         setOrders(data);
         dispatch(ordersDetailsfetchingSuccess(data));
@@ -70,7 +69,6 @@ export const addProductFromSupp = (formData, userData) => async(dispatch)=>{
     dispatch(startFetching());
     try {
         const resData = await api.addProductFromSupp(formData);
-        // console.log(resData);
         const { data } = await api.getUsersData(userData);
         dispatch(productDetailsfetchingSuccess(data));
     } catch (error) {
@@ -82,7 +80,6 @@ export const deleteProductById = (formData, userData, setData) => async(dispatch
     dispatch(startFetching());
     try {
         const resData = await api.deleteProductById(formData);
-        // console.log(resData.data);
         const { data } = await api.getUsersData(userData);
         setData(data);
         dispatch(productDetailsfetchingSuccess(data));

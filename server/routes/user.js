@@ -16,7 +16,6 @@ router.post("/:id", async (req, res) => {
       },
       { new: true }
     );
-    //console.log(updatedUser);
     const token = jwt.sign(
       {
         id: updatedUser._id,
@@ -24,7 +23,6 @@ router.post("/:id", async (req, res) => {
       },
       process.env.JWT_SECRET,
       { expiresIn: "3d" });
-      //console.log(token);
       if(updatedUser){
         const {_id,firstName,lastName,username,email,password,image,isAdmin,bankid} = updatedUser;
         res.status(200).json({_id,firstName,lastName,username,email,password,image,isAdmin,bankid, token});
@@ -53,7 +51,6 @@ router.post("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
-    //console.log(others);
     return res.status(200).json(others);
   } catch (err) {
     return res.status(500).json(err);
@@ -63,7 +60,6 @@ router.post("/find/:id", verifyTokenAndAdmin, async (req, res) => {
 //GET ALL USER
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
   
-  // console.log(req.body);
 
   // try {
   //   const users = query

@@ -21,7 +21,6 @@ const AddProduct = () => {
         const res = await axios.get(
           "http://localhost:3006/api/product/showall"
         );
-        // console.log(res);
         setProducts(res.data?.result);
       } catch (error) {
         console.log(
@@ -31,7 +30,6 @@ const AddProduct = () => {
     };
     getProducts();
   }, []);
-  console.log(products);
   
   const handleStock = (temp)=>{
     if(temp===true){
@@ -43,14 +41,11 @@ const AddProduct = () => {
   }
   const addProduct = (event)=>{
     event.preventDefault();
-    console.log(event.target.id);
     let selectedProduct = {};
     products.map((prod)=>{if(prod._id===event.target.id){
       selectedProduct=prod;
     }})
-    // console.log(selectedProduct);
-    // const selectedProduct = {...temp};
-
+    
     const supplierBankId = selectedProduct.supplierId.bankid;
     
     const  {title, desc, img, supplierId, _id, inStock, color, size, categories, price } = selectedProduct;
@@ -68,7 +63,6 @@ const AddProduct = () => {
       price: price+10,
       supplierBankId : supplierBankId
     }
-    // console.log(formData);
     dispatch(addProductFromSupp(formData, user ));
     document.getElementById(event.target.id).textContent="PRODUCT ADDED";
   }
